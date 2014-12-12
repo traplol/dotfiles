@@ -1,7 +1,7 @@
 execute pathogen#infect()
 set nocompatible
-filetype plugin indent on
 " turn syntax highlighting on
+filetype plugin indent on
 set t_Co=256
 syntax on
 " set UTF-8 encoding
@@ -21,7 +21,6 @@ set tabstop=4
 set shiftwidth=4
 " expand tabs to spaces
 set expandtab
-" wrap lines at 120 chars. 80 is somewaht antiquated with nowadays displays.
 set nohlsearch
 set incsearch
 set ignorecase
@@ -56,7 +55,6 @@ map <C-n> :NERDTreeToggle<CR>
 
 nnoremap ; :
 
-" Disable arrow keys.
 map <up> :resize -5<CR>
 map <down> :resize +5<CR>
 map <left> :vertical resize +5<CR>
@@ -66,6 +64,7 @@ map <S-W> <Plug>CamelCaseMotion_w
 map <S-B> <Plug>CamelCaseMotion_b
 map <S-E> <Plug>CamelCaseMotion_e
 
+" Disable arrow keys in insert.
 imap <up> <nop>
 imap <down> <nop>
 imap <left> <nop>
