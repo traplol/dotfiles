@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 this_script=$0
 dotfiles=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
@@ -6,7 +7,8 @@ dotfiles_old=~/dotfiles_old
 
 mkdir -p $dotfiles_old
 cd $dotfiles
-
+# Clone the vim plugins.
+git submodule update --init --recursive
 
 for f in "$dotfiles"/*
 do
