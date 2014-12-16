@@ -1,5 +1,6 @@
 execute pathogen#infect()
 set nocompatible
+set showcmd
 " turn syntax highlighting on
 filetype plugin indent on
 set t_Co=256
@@ -38,7 +39,7 @@ set number
 
 set scrolloff=10
 " backspace over everything in insert mode
-set backspace=indent,eol,start 
+set backspace=indent,eol,start
 set list
 set listchars=tab:>-,trail:.,extends:>,precedes:<
 highlight SpecialKey guifg=gray ctermfg=66
@@ -51,18 +52,30 @@ autocmd InsertLeave * :set hlsearch
 " prevents vim from using spaces instead of tabs in make files
 autocmd FileType make setlocal noexpandtab
 
+nnoremap <Leader>trim :%s/\s\+$//e<CR>
+
+
 map <C-n> :NERDTreeToggle<CR>
 
 nnoremap ; :
 
-map <up> :resize -5<CR>
-map <down> :resize +5<CR>
-map <left> :vertical resize +5<CR>
-map <right> :vertical resize -5<CR>
+nnoremap Q @q
+
+nnoremap <up> :resize -5<CR>
+nnoremap <down> :resize +5<CR>
+nnoremap <left> :vertical resize +5<CR>
+nnoremap <right> :vertical resize -5<CR>
 
 map <S-W> <Plug>CamelCaseMotion_w
 map <S-B> <Plug>CamelCaseMotion_b
 map <S-E> <Plug>CamelCaseMotion_e
+
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+nnoremap Cw cw<C-r>0<ESC>b
 
 " Disable arrow keys in insert.
 imap <up> <nop>
