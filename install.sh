@@ -7,8 +7,15 @@ dotfiles_old=~/dotfiles_old
 
 mkdir -p $dotfiles_old
 cd $dotfiles
-# Clone the vim plugins.
-git submodule update --init --recursive
+
+for arg in $@
+do
+    if [ "$arg" == "--clone-plugins" ] ; then
+        # Clone the vim plugins.
+        echo "Cloning vim plugins, you may need to build some of them manually."
+        git submodule update --init --recursive
+    fi
+done
 
 for f in "$dotfiles"/*
 do
