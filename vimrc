@@ -17,7 +17,7 @@ set autoindent
 set smartindent
 " configure tabwidth and insert spaces instead of tabs
 " tab width is 4 spaces
-set tabstop=4
+set softtabstop=4
 " indent also with 4 spaces
 set shiftwidth=4
 " expand tabs to spaces
@@ -42,7 +42,6 @@ set scrolloff=10
 set backspace=indent,eol,start
 set list
 set listchars=tab:>-,trail:.,extends:>,precedes:<
-highlight SpecialKey guifg=gray ctermfg=66
 
 " disable search highlight in insert mode
 autocmd InsertEnter * :set nohlsearch
@@ -70,12 +69,33 @@ map <S-W> <Plug>CamelCaseMotion_w
 map <S-B> <Plug>CamelCaseMotion_b
 map <S-E> <Plug>CamelCaseMotion_e
 
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+if exists('$TMUX')
+    function! TmuxOrSplitSwitch(wincmd, tmuxdir)
+        let previous_winnr = winnr()
+        silent! execute "wincmd " . a:wincmd
+        if previous_winnr == winnr()
+            call system("tmux select-pane -" . a:tmuxdir)
+            redraw!
+        endif
+    endfunction
+
+    let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
+    let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
+    let &t_te = "\<Esc>]2;". previous_title . "\<Esc>\\" . &t_te
+
+    nnoremap <silent> <C-h> :call TmuxOrSplitSwitch('h', 'L')<cr>
+    nnoremap <silent> <C-j> :call TmuxOrSplitSwitch('j', 'D')<cr>
+    nnoremap <silent> <C-k> :call TmuxOrSplitSwitch('k', 'U')<cr>
+    nnoremap <silent> <C-l> :call TmuxOrSplitSwitch('l', 'R')<cr>
+else
+    map <C-h> <C-w>h
+    map <C-j> <C-w>j
+    map <C-k> <C-w>k
+    map <C-l> <C-w>l
+endif
 
 nnoremap Cw cw<C-r>0<ESC>b
+
 
 " Disable arrow keys in insert.
 imap <up> <nop>
@@ -90,3 +110,5 @@ colorscheme slate
 highlight Search cterm=NONE ctermfg=black ctermbg=yellow
 highlight SyntasticError cterm=NONE ctermfg=yellow ctermbg=red
 highlight SyntasticWarning cterm=NONE ctermfg=black ctermbg=magenta
+highlight SpecialKey guifg=gray ctermfg=66
+highlight Pmenu ctermfg=yellow ctermbg=59
