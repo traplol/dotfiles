@@ -17,7 +17,7 @@ cd $dotfiles
 
 
 help_msg() {
-    echo "usage: $this_script [-hcu]"
+    echo "usage: $this_script [OPTIONS]"
     echo "  -h --help             Display this message."
     echo "  -c --clone-plugins    Clone vim plugins."
     echo "  -u --update           Updates, then reruns the script minus the"
@@ -58,7 +58,8 @@ make_sym_links() {
         t1=${f##*/}
         t2=${this_script##*/}
         # Skip this install script and git stuff
-        if [ "$t1" = "$t2" ] || [ "$t1" = ".git*" ] ; then
+        if [ "$t1" = "$t2" ] ||
+           [ "$t1" = ".*" ] ; then
             continue
         fi
         # Check if the dotfile already exists
