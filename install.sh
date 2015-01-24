@@ -9,12 +9,15 @@ git --version >/dev/null 2>&1 || {
 
 this_script=$0
 this_script_args=$@
-dotfiles=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-dotfiles_old=~/dotfiles_old
-
-mkdir -p $dotfiles_old
-cd $dotfiles
-
+source="${BASH_SOURCE[0]}"
+while [ -h "$source" ]; do # resolve $source until the file is no longer a symlink
+    dir="$( cd -P "$( dirname "$source" )" && pwd )"
+    source="$(readlink "$source")"
+    [[ $source != /* ]] && source="$dir/$source" # if $source was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+dir="$( cd -P "$( dirname "$source" )" && pwd )"
+cd $dir
+mkdir -p "backup"
 
 help_msg() {
     echo "usage: $this_script [OPTIONS]"
@@ -59,38 +62,16 @@ update() {
 }
 
 make_sym_links() {
-    echo "Making symbolic links for dotfiles."
-    for f in "$dotfiles"/*
+    # Go into each directory and source the bootstrap
+    for f in "$dir"/*
     do
-        dotfile=~/.${f##*/}
-        bakup=$dotfiles_old/${dotfile##*/}
-        t1=${f##*/}
-        t2=${this_script##*/}
-        # Skip this install script and any dotfiles in this directory.
-        if [ "$t1" = "$t2" ] ||
-           [ "$t1" = ".*" ] ; then
-            continue
-        fi
-        # Check if the dotfile already exists
-        if [ \( -f $dotfile -o -d $dotfile \) ]; then
-            # If the dotfile is not a symbolic link,
-            if [ ! -L $dotfile ]; then
-                # Backup the file in ~/dotfiles_old/
-                echo "'$dotfile' exists; backing up in '$bakup'"
-                mv $dotfile $bakup
-            else
-                echo "'$dotfile' is already a symlink, skipping."
+        # only look at directories and skip .dotfiles
+        if [ -d "$f" ] && [ "$f" != ".*" ] ; then
+            if [ -f "$f/bootstrap.sh" ] ; then
+                /bin/bash "$f/bootstrap.sh"
             fi
         fi
-
-        # Don't bother replacing an existing symlink
-        if [ ! -L $dotfile ]; then
-            echo "Creating symlink to '$f' at '$dotfile'"
-            ln -s "$f" "$dotfile"
-        fi
-
     done
-    echo "Done making symbolic links."
 }
 
 for arg in $this_script_args
