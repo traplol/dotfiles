@@ -22,6 +22,7 @@ help_msg() {
     echo "  -c --clone-submodules   Clone git submodules."
     echo "  -u --update             Updates, then reruns the script minus the"
     echo "                          '-u' and '--update' flags."
+    echo "  -n --no-link            Does not create symbolic links to dotfiles."
     exit 0
 }
 
@@ -100,6 +101,8 @@ do
         clone_plugins_flag=true
     elif [ "$arg" == "-u" ] || [ "$arg" == "--update" ] ; then
         update_flag=true
+    elif [ "$arg" == "-n" ] || [ "$arg" == "--no-link" ] ; then
+        no_symlink_flag=true
     else
         echo "Uknown option '$arg'"
         unknown_options_flag=true
@@ -123,7 +126,11 @@ if [[ "$clone_plugins_flag" ]] ; then
     clone_plugins
 fi
 
-make_sym_links
+if [[ "$no_symlink_flag" ]] ; then
+    : # do nothing!
+else
+    make_sym_links
+fi
 
 echo "Done."
 
