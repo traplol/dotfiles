@@ -65,8 +65,9 @@ make_sym_links() {
     # Go into each directory and source the bootstrap
     for f in "$dir"/*
     do
-        # only look at directories and skip .dotfiles
-        if [ -d "$f" ] && [ "$f" != ".*" ] ; then
+        if [ -d "$f" ] &&               # directories
+           [ "$f" != ".*" ] &&          # no .dotfiles
+           [ "$f" != "backup" ] ; then  # skip backup directory
             if [ -f "$f/bootstrap.sh" ] ; then
                 /bin/bash "$f/bootstrap.sh"
             fi
