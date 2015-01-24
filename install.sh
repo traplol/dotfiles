@@ -30,7 +30,7 @@ clone_submodules() {
     # Clone submodules
     echo "Cloning submodules..."
     git submodule update --init --recursive
-    echo "Done cloning plugins."
+    echo "Done cloning submodules."
 }
 
 update() {
@@ -98,7 +98,7 @@ do
     if [ "$arg" == "-h" ] || [ "$arg" == "--help" ] ; then
         help_msg_flag=true
     elif [ "$arg" == "-c" ] || [ "$arg" == "--clone-submodules" ] ; then
-        clone_plugins_flag=true
+        clone_submodules_flag=true
     elif [ "$arg" == "-u" ] || [ "$arg" == "--update" ] ; then
         update_flag=true
     elif [ "$arg" == "-n" ] || [ "$arg" == "--no-link" ] ; then
@@ -127,8 +127,8 @@ if [[ "$help_msg_flag" ]] ; then
     help_msg
 fi
 
-if [[ "$clone_plugins_flag" ]] ; then
-    clone_plugins
+if [[ "$clone_submodules_flag" ]] ; then
+    clone_submodules
 fi
 
 if [[ "$no_symlink_flag" ]] ; then
