@@ -104,8 +104,6 @@ imap <left> <nop>
 imap <right> <nop>
 
 " Colors
-" Highlight columns 81+
-match ErrorMsg '\%>80v.\+'
 colorscheme slate
 highlight Search cterm=NONE ctermfg=black ctermbg=yellow
 highlight SyntasticError cterm=NONE ctermfg=yellow ctermbg=red
