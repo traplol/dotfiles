@@ -8,7 +8,8 @@ git --version >/dev/null 2>&1 || {
 }
 
 this_script=$0
-this_script_args=$@
+this_script_args=$(getopt -o hcung: -l help,clone-submodules,update,no-link,generate: -n "$(basename $this_script)" -- "$@")
+
 source="${BASH_SOURCE[0]}"
 while [ -h "$source" ]; do # resolve $source until the file is no longer a symlink
     dir="$( cd -P "$( dirname "$source" )" && pwd )"
@@ -26,6 +27,8 @@ help_msg() {
     echo "  -u --update             Updates, then reruns the script minus the"
     echo "                          '-u' and '--update' flags."
     echo "  -n --no-link            Does not create symbolic links to dotfiles."
+    echo "  -g --generate [NAME]    Creates a directory and copies bootstrap.sh.template"
+    echo "                          to the new directory as bootstrap.sh."
     exit 0
 }
 
@@ -61,6 +64,23 @@ update() {
     exit 0
 }
 
+generate() {
+    local gen_dir=$1
+    if [[ "$gen_dir" == */* ]] ; then
+        echo "This script will not parse more than one level deep, aborting."
+        exit 1
+    elif [ -e "$gen_dir" ] ; then
+        echo "'$gen_dir' exists already, aborting. "
+        exit 1
+    else
+        echo "Making bootstrap directory '$gen_dir'."
+        mkdir "$gen_dir"
+        cd $gen_dir
+        cp "../bootstrap.sh.template" "./bootstrap.sh"
+    fi
+    exit 0
+}
+
 make_sym_links() {
     # Go into each directory and source the bootstrap
     for f in "$dir"/*
@@ -75,20 +95,20 @@ make_sym_links() {
     done
 }
 
-for arg in $this_script_args
+while [ $# -gt 0 ]
 do
-    if [ "$arg" == "-h" ] || [ "$arg" == "--help" ] ; then
-        help_msg_flag=true
-    elif [ "$arg" == "-c" ] || [ "$arg" == "--clone-submodules" ] ; then
-        clone_submodules_flag=true
-    elif [ "$arg" == "-u" ] || [ "$arg" == "--update" ] ; then
-        update_flag=true
-    elif [ "$arg" == "-n" ] || [ "$arg" == "--no-link" ] ; then
-        no_symlink_flag=true
-    else
-        echo "Uknown option '$arg'"
-        unknown_options_flag=true
-    fi
+    case "$1" in
+        -h | --help ) help_msg_flag=true; shift ;;
+        -c | --clone-submodules ) clone_submodules_flag=true; shift ;;
+        -u | --update ) update_flag=true; shift ;;
+        -n | --no-link ) no_symlink_flag=true; shift ;;
+        -g | --generate ) generate_flag=true; generate_dir="$2"; shift; shift ;;
+        -- ) shift; break ;;
+        *  )
+            echo "Uknown option '$1'"
+            unknown_options_flag=true
+            shift ;;
+    esac
 done
 
 
@@ -107,6 +127,10 @@ fi
 
 if [[ "$help_msg_flag" ]] ; then
     help_msg
+fi
+
+if [[ "$generate_flag" ]] ; then
+    generate "$generate_dir"
 fi
 
 if [[ "$clone_submodules_flag" ]] ; then
