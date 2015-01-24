@@ -18,22 +18,30 @@ cd $dotfiles
 
 help_msg() {
     echo "usage: $this_script [OPTIONS]"
-    echo "  -h --help             Display this message."
-    echo "  -c --clone-plugins    Clone vim plugins."
-    echo "  -u --update           Updates, then reruns the script minus the"
-    echo "                        '-u' and '--update' flags."
+    echo "  -h --help               Display this message."
+    echo "  -c --clone-submodules   Clone git submodules."
+    echo "  -u --update             Updates, then reruns the script minus the"
+    echo "                          '-u' and '--update' flags."
     exit 0
 }
 
-clone_plugins() {
-    # Clone the vim plugins.
-    echo "Cloning vim plugins, you may need to build some of them manually."
+clone_submodules() {
+    # Clone submodules
+    echo "Cloning submodules..."
     git submodule update --init --recursive
     echo "Done cloning plugins."
 }
 
 update() {
-    _new_args=""
+    # Check if there are any local changes to dotfiles or this install script.
+    if git diff-index --quiet HEAD --; then
+        echo "No local changes."
+    else
+        echo "Local changes found, run 'git diff HEAD' to see pending changes and consider stashing or pushing. "
+        exit 1
+    fi
+
+    local _new_args=""
     for arg in $this_script_args
     do
         if [ "$arg" == "-u" ] || [ "$arg" == "--update" ] ; then
@@ -57,7 +65,7 @@ make_sym_links() {
         bakup=$dotfiles_old/${dotfile##*/}
         t1=${f##*/}
         t2=${this_script##*/}
-        # Skip this install script and git stuff
+        # Skip this install script and any dotfiles in this directory.
         if [ "$t1" = "$t2" ] ||
            [ "$t1" = ".*" ] ; then
             continue
@@ -88,7 +96,7 @@ for arg in $this_script_args
 do
     if [ "$arg" == "-h" ] || [ "$arg" == "--help" ] ; then
         help_msg_flag=true
-    elif [ "$arg" == "-c" ] || [ "$arg" == "--clone-plugins" ] ; then
+    elif [ "$arg" == "-c" ] || [ "$arg" == "--clone-submodules" ] ; then
         clone_plugins_flag=true
     elif [ "$arg" == "-u" ] || [ "$arg" == "--update" ] ; then
         update_flag=true
