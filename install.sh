@@ -109,13 +109,18 @@ do
     fi
 done
 
-if [[ "$unknown_options_flag" ]] ; then
-    echo "Stopping."
-    exit 1
-fi
 
 if [[ "$update_flag" ]] ; then
     update
+fi
+
+# Allow the script to update so that any flags used in the updated install
+# script will be passed to it. This allows for the updated script to catch
+# any unknown arguments or to process arguments that this script may not
+# know.
+if [[ "$unknown_options_flag" ]] ; then
+    echo "Stopping."
+    exit 1
 fi
 
 if [[ "$help_msg_flag" ]] ; then
