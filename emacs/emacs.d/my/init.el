@@ -28,8 +28,8 @@
 (setq autopair-autowrap t)
 
 ;; My c and cpp mode options!
-;;(add-to-list 'load-path (expand-file-name "~/.emacs.d/my"))
-;;(require 'my:c-and-cpp-mode-options)
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/my"))
+(require 'my:c-and-cpp-mode-options)
 
 ;; Inline eval-replace sexp.
 (defun my:replace-last-sexp ()
