@@ -17,7 +17,6 @@
 ;; evil-mode
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/evil"))
 (require 'evil)
-;;(evil-mode 1)
 ;; Use Emacs keybindings when in insert mode.
 (setcdr evil-insert-state-map nil)
 (define-key evil-insert-state-map [escape] 'evil-normal-state)
@@ -28,8 +27,9 @@
 (setq autopair-autowrap t)
 
 ;; My c and cpp mode options!
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/my"))
-(require 'my:c-and-cpp-mode-options)
+(load (expand-file-name "~/.emacs.d/my/my:c-and-c++-mode-options"))
+;; My lisp mode options
+(load (expand-file-name "~/.emacs.d/my/my:lisp-modes-options"))
 
 ;; Inline eval-replace sexp.
 (defun my:replace-last-sexp ()
