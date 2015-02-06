@@ -41,7 +41,7 @@ clone_submodules() {
 
 update() {
     # Check if there are any local changes to dotfiles or this install script.
-    if git diff-index --quiet HEAD --; then
+    if git diff-index --quiet HEAD --ignore-submodules=dirty --; then
         echo "No local changes."
     else
         echo "Local changes found, run 'git diff HEAD' to see pending changes and consider stashing or pushing. "
