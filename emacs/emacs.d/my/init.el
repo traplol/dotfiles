@@ -3,6 +3,9 @@
 ;; Disable the menubar
 (menu-bar-mode -99)
 
+;; f5 to compile.
+(define-key (current-global-map) (kbd "<f5>") 'compile)
+
 ;; auto-complete
 (require 'auto-complete)
 
