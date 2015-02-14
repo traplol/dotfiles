@@ -4,7 +4,7 @@
 (menu-bar-mode -99)
 
 ;; f5 to compile.
-(define-key (current-global-map) (kbd "<f5>") 'compile)
+(load (expand-file-name "~/.emacs.d/my/my:compile"))
 
 ;; auto-complete
 (require 'auto-complete)
