@@ -8,7 +8,7 @@ git --version >/dev/null 2>&1 || {
 }
 
 this_script=$0
-this_script_args=$(getopt -o hcung: -l help,clone-submodules,update,no-link,generate: -n "$(basename $this_script)" -- "$@")
+this_script_args=$(getopt -o hcung: -l help,clone-submodules,update,no-link,generate:,uninstall -n "$(basename $this_script)" -- "$@")
 
 source="${BASH_SOURCE[0]}"
 while [ -h "$source" ]; do # resolve $source until the file is no longer a symlink
@@ -29,6 +29,9 @@ help_msg() {
     echo "  -n --no-link            Does not create symbolic links to dotfiles."
     echo "  -g --generate [NAME]    Creates a directory and copies bootstrap.sh.template"
     echo "                          to the new directory as bootstrap.sh."
+    echo "  --uninstall             Removes the generated symbolic links and restores"
+    echo "                          any backups that were saved."
+    echo ""
     exit 0
 }
 
@@ -81,18 +84,25 @@ generate() {
     exit 0
 }
 
-make_sym_links() {
-    # Go into each directory and source the bootstrap
+run_bootstraps() {
     for f in "$dir"/*
     do
         if [ -d "$f" ] &&               # directories
            [ "$f" != ".*" ] &&          # no .dotfiles
            [ "$f" != "backup" ] ; then  # skip backup directory
             if [ -f "$f/bootstrap.sh" ] ; then
-                /bin/bash "$f/bootstrap.sh"
+                /bin/bash "$f/bootstrap.sh" $@
             fi
         fi
     done
+}
+
+make_sym_links() {
+    run_bootstraps --create-symbolic-links
+}
+
+uninstall() {
+    run_bootstraps --remove-symbolic-links
 }
 
 while [ $# -gt 0 ]
@@ -103,24 +113,33 @@ do
         -u | --update ) update_flag=true; shift ;;
         -n | --no-link ) no_symlink_flag=true; shift ;;
         -g | --generate ) generate_flag=true; generate_dir="$2"; shift; shift ;;
+        --uninstall ) uninstall_flag=true; shift ;;
         -- ) shift; break ;;
         *  )
-            echo "Uknown option '$1'"
+            echo "Unknown option '$1'"
             unknown_options_flag=true
             shift ;;
     esac
 done
 
 
-if [[ "$update_flag" ]] ; then
-    update
+# Run the uninstall first and ignore any other arguments that may have 
+# been passed.
+if [[ "$uninstall_flag" ]] ; then
+    uninstall
+    exit 1
 fi
 
 # Allow the script to update so that any flags used in the updated install
 # script will be passed to it. This allows for the updated script to catch
 # any unknown arguments or to process arguments that this script may not
 # know.
+if [[ "$update_flag" ]] ; then
+    update
+fi
+
 if [[ "$unknown_options_flag" ]] ; then
+    help_msg
     echo "Stopping."
     exit 1
 fi
