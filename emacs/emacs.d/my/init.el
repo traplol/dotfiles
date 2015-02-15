@@ -3,6 +3,10 @@
 ;; Disable the menubar
 (menu-bar-mode -99)
 
+;; auto-update any new packages.
+(load (expand-file-name "~/.emacs.d/my/packman/packman.el"))
+(my:packman-install-my-packages)
+
 ;; f5 to compile.
 (load (expand-file-name "~/.emacs.d/my/my:compile"))
 
