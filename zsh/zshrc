@@ -52,8 +52,6 @@ ZSH_THEME="ys"
 plugins=(git)
 
 # User configuration
-
-export PATH="/usr/local/heroku/bin:/home/max/.rvm/gems/ruby-2.2.1/bin:/home/max/.rvm/gems/ruby-2.2.1@global/bin:/home/max/.rvm/rubies/ruby-2.2.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/max/.rvm/bin:/home/max/.rvm/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
