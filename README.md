@@ -31,3 +31,4 @@ Ex:
 .vimrc -> vimrc
 .tmux -> tmux
 ```
+Once the dotfiles have been copied just run ```dotfiles/install.sh``` to backup and create the symbolic links.
