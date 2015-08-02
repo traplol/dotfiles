@@ -7,3 +7,6 @@
 [submodule "vim/vim/bundle/CamelCaseMotion"]
 	path = vim/vim/bundle/CamelCaseMotion
 	url = https://github.com/bkad/CamelCaseMotion.git
+[submodule "zsh/oh-my-zsh"]
+	path = zsh/oh-my-zsh
+	url = https://github.com/robbyrussell/oh-my-zsh.git
