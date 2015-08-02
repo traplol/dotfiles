@@ -20,6 +20,8 @@ set smartindent
 set softtabstop=4
 " indent also with 4 spaces
 set shiftwidth=4
+" 2 tab indent for ruby files.
+au FileType ruby setl sw=2 sts=2 et
 " expand tabs to spaces
 set expandtab
 set nohlsearch

@@ -64,3 +64,5 @@
 	'irony-completion-at-point-async))
 (add-hook 'irony-mode-hook 'my:irony-mode-hook)
 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
+(add-hook 'html-mode-hook 'web-mode)
