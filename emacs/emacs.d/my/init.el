@@ -65,4 +65,13 @@
 (add-hook 'irony-mode-hook 'my:irony-mode-hook)
 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
+
 (add-hook 'html-mode-hook 'web-mode)
+
+;; Auto complete the `end' keyword for ruby control structures
+(require 'ruby-end)
+(add-hook 'ruby-mode-hook 'ruby-end-mode)
+(setq ruby-end-insert-newline nil)
+
+;; Add '.scss' file extension to open in css-mode
+(add-to-list 'auto-mode-alist '("\\.scss\\'" . css-mode))
