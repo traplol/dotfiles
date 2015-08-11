@@ -53,6 +53,8 @@
   (flycheck-mode 1)
   (irony-mode 1))
 
+(add-hook 'c++-mode-hook (lambda ()
+                           (setq flycheck-clang-language-standard "c++11")))
 (add-hook 'c++-mode-hook 'my:c-mode-hook)
 (add-hook 'c-mode-hook 'my:c-mode-hook)
 (add-hook 'objc-mode-hook 'my:c-mode-hook)
@@ -75,3 +77,9 @@
 
 ;; Add '.scss' file extension to open in css-mode
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . css-mode))
+
+(defun my:js-erb-hook ()
+  javascript-mode
+  web-mode)
+;; Add '.js.erb' file extension to open in javascript-mode and web-mode
+(add-to-list 'auto-mode-alist '("\\.js.erb\\'" . my:js-erb-hook))
