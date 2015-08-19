@@ -78,8 +78,8 @@
 ;; Add '.scss' file extension to open in css-mode
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . css-mode))
 
-(defun my:js-erb-hook ()
-  javascript-mode
-  web-mode)
+(defun my:js-erb-modes ()
+  (javascript-mode)
+  (web-mode))
 ;; Add '.js.erb' file extension to open in javascript-mode and web-mode
-(add-to-list 'auto-mode-alist '("\\.js.erb\\'" . my:js-erb-hook))
+(add-to-list 'auto-mode-alist '("\\.js.erb\\'" . my:js-erb-modes))
