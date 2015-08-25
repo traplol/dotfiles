@@ -2,6 +2,8 @@
 (tool-bar-mode -1)
 ;; Disable the menubar
 (menu-bar-mode -99)
+;; Disable backup files (*~ files)
+(setq make-backup-files nil)
 
 ;; auto-update any new packages.
 (load (expand-file-name "~/.emacs.d/my/packman/packman.el"))
@@ -48,6 +50,7 @@
 
 ;; irony-mode
 (defun my:c-mode-hook ()
+  (c-set-offset 'case-label '+)
   (company-mode 1)
   (company-irony 1)
   (flycheck-mode 1)
@@ -57,6 +60,8 @@
                            (setq flycheck-clang-language-standard "c++11")))
 (add-hook 'c++-mode-hook 'my:c-mode-hook)
 (add-hook 'c-mode-hook 'my:c-mode-hook)
+(add-hook 'c-mode-hook (lambda ()
+                         (setq flycheck-clang-language-standard "c99")))
 (add-hook 'objc-mode-hook 'my:c-mode-hook)
 
 (defun my:irony-mode-hook ()
