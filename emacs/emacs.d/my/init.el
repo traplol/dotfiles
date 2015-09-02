@@ -72,6 +72,13 @@
 (add-hook 'irony-mode-hook 'my:irony-mode-hook)
 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
+(defun my:go-mode-hook ()
+  (setq tab-width 4)
+  (setq indent-tabs-mode t)
+  (add-hook 'before-save-hook 'gofmt-before-save))
+
+(add-hook 'go-mode-hook 'my:go-mode-hook)
+
 
 (add-hook 'html-mode-hook 'web-mode)
 
