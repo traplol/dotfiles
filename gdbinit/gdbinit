@@ -248,6 +248,7 @@ class Dashboard(gdb.Command):
         Dashboard.parse_inits(False)
         # GDB override
         run('set pagination off')
+        run('set disassembly-flavor intel')
         run('alias -a db = dashboard')
 
     @staticmethod
@@ -667,7 +668,7 @@ instructions constituting the current statement are marked, if available."""
                     func_info = '? '
             else:
                 func_info = ''
-            format_string = '{} {}{}{}'
+            format_string = '{} {} {}{}'
             if addr == frame.pc():
                 addr_str = ansi(addr_str, R.style_selected_1)
                 opcodes = ansi(opcodes, R.style_selected_1)
