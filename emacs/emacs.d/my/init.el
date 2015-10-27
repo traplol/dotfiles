@@ -2,8 +2,13 @@
 (tool-bar-mode -1)
 ;; Disable the menubar
 (menu-bar-mode -99)
+;; Line/column mode
+(setq column-number-mode t)
 ;; Disable backup files (*~ files)
 (setq make-backup-files nil)
+
+;; auto-refresh buffers that change on disk
+(global-auto-revert-mode t)
 
 ;; auto-update any new packages.
 (load (expand-file-name "~/.emacs.d/my/packman/packman.el"))
