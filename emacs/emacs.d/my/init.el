@@ -12,10 +12,10 @@
 
 ;; auto-update any new packages.
 (load (expand-file-name "~/.emacs.d/my/packman/packman.el"))
-(my:packman-install-my-packages)
+(my-packman-install-my-packages)
 
 ;; f5 to compile.
-(load (expand-file-name "~/.emacs.d/my/my:compile"))
+(load (expand-file-name "~/.emacs.d/my/my-compile"))
 
 ;; auto-complete
 (require 'auto-complete)
@@ -42,19 +42,19 @@
 (setq autopair-autowrap t)
 
 ;; My c and cpp mode options!
-(load (expand-file-name "~/.emacs.d/my/my:c-and-c++-mode-options"))
+(load (expand-file-name "~/.emacs.d/my/my-c-and-c++-mode-options"))
 ;; My lisp mode options
-(load (expand-file-name "~/.emacs.d/my/my:lisp-modes-options"))
+(load (expand-file-name "~/.emacs.d/my/my-lisp-modes-options"))
 
 ;; Inline eval-replace sexp.
-(defun my:replace-last-sexp ()
+(defun my-replace-last-sexp ()
   (interactive)
   (let ((value (eval (preceding-sexp))))
     (kill-sexp -1)
     (insert (format "%S" value))))
 
 ;; irony-mode
-(defun my:c-mode-hook ()
+(defun my-c-mode-hook ()
   (c-set-offset 'case-label '+)
   (company-mode 1)
   (company-irony 1)
@@ -63,26 +63,26 @@
 
 (add-hook 'c++-mode-hook (lambda ()
                            (setq flycheck-clang-language-standard "c++11")))
-(add-hook 'c++-mode-hook 'my:c-mode-hook)
-(add-hook 'c-mode-hook 'my:c-mode-hook)
+(add-hook 'c++-mode-hook 'my-c-mode-hook)
+(add-hook 'c-mode-hook 'my-c-mode-hook)
 (add-hook 'c-mode-hook (lambda ()
                          (setq flycheck-clang-language-standard "c99")))
-(add-hook 'objc-mode-hook 'my:c-mode-hook)
+(add-hook 'objc-mode-hook 'my-c-mode-hook)
 
-(defun my:irony-mode-hook ()
+(defun my-irony-mode-hook ()
   (define-key irony-mode-map [remap completion-at-point]
 	'irony-completion-at-point-async)
   (define-key irony-mode-map [remap complete-symbol]
 	'irony-completion-at-point-async))
-(add-hook 'irony-mode-hook 'my:irony-mode-hook)
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
-(defun my:go-mode-hook ()
+(defun my-go-mode-hook ()
   (setq tab-width 4)
   (setq indent-tabs-mode t)
   (add-hook 'before-save-hook 'gofmt-before-save))
 
-(add-hook 'go-mode-hook 'my:go-mode-hook)
+(add-hook 'go-mode-hook 'my-go-mode-hook)
 
 
 (add-hook 'html-mode-hook 'web-mode)
@@ -95,8 +95,8 @@
 ;; Add '.scss' file extension to open in css-mode
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . css-mode))
 
-(defun my:js-erb-modes ()
+(defun my-js-erb-modes ()
   (javascript-mode)
   (web-mode))
 ;; Add '.js.erb' file extension to open in javascript-mode and web-mode
-(add-to-list 'auto-mode-alist '("\\.js.erb\\'" . my:js-erb-modes))
+(add-to-list 'auto-mode-alist '("\\.js.erb\\'" . my-js-erb-modes))

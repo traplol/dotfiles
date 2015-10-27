@@ -16,4 +16,4 @@
         (expand-file-name file dir)
       nil)))
 
-(provide 'my:lib)
+(provide 'my-lib)
