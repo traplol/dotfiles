@@ -82,3 +82,11 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 unset JAVA_TOOL_OPTIONS
+
+alias qemu=qemu-system-i386
+alias eedit=emacsclient
+export PATH="/usr/local/i386elfgcc/bin:$PATH"
+export PATH="$HOME/opt/cross/bin:$PATH"
+export PATH="$HOME/opt/bochs/bin:$PATH"
+export BXSHARE="$HOME/opt/bochs/share/bochs"
+

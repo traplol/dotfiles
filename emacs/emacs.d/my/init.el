@@ -6,6 +6,11 @@
 (setq column-number-mode t)
 ;; Disable backup files (*~ files)
 (setq make-backup-files nil)
+;; Emacs server
+(server-start)
+
+;; Font stuff
+(set-default-font "DejaVu Sans Mono 15")
 
 ;; auto-refresh buffers that change on disk
 (global-auto-revert-mode t)
@@ -35,6 +40,9 @@
 ;; Use Emacs keybindings when in insert mode.
 (setcdr evil-insert-state-map nil)
 (define-key evil-insert-state-map [escape] 'evil-normal-state)
+(require 'evil-numbers)
+(global-set-key (kbd "C-c a") 'evil-numbers/inc-at-pt)
+(global-set-key (kbd "C-c x") 'evil-numbers/dec-at-pt)
 
 ;; autopair
 (require 'autopair)
@@ -54,6 +62,8 @@
     (insert (format "%S" value))))
 
 ;; irony-mode
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
 (defun my-c-mode-hook ()
   (c-set-offset 'case-label '+)
   (company-mode 1)
@@ -100,3 +110,28 @@
   (web-mode))
 ;; Add '.js.erb' file extension to open in javascript-mode and web-mode
 (add-to-list 'auto-mode-alist '("\\.js.erb\\'" . my-js-erb-modes))
+
+;; GNU Assembler
+(setq asm-comment-char ?\#)
+
+;; sudo edit the current buffer
+(defun sudo-edit (&optional arg)
+  "Edit currently visited file as root.
+
+With a prefix ARG prompt for a file to visit.
+Will also prompt for a file to visit if current buffer is not visiting a file."
+  (interactive "P")
+  (if (or arg (not buffer-file-name))
+      (find-file (concat "/sudo:root@localhost:"
+                         (ido-read-file-name "Find file(as root):")))
+    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+
+;;
+(defadvice ido-find-file (after sudo-find-file activate)
+  "Find file as root if necessary."
+  (unless (and buffer-file-name
+               (file-writable-p buffer-file-name))
+    (find-alternate-file (concat "/sudo::" buffer-file-name))))
+
+(require 'ido)
+(ido-mode 't)
