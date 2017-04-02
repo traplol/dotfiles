@@ -9,8 +9,16 @@
 ;; Emacs server
 (server-start)
 
+;; IDO
+(require 'ido)
+(ido-mode 't)
+
 ;; Font stuff
+(set-language-environment "UTF-8")
+(set-default-coding-systems 'utf-8)
 (set-default-font "DejaVu Sans Mono 15")
+(require 'unicode-fonts)
+(unicode-fonts-setup)
 
 ;; auto-refresh buffers that change on disk
 (global-auto-revert-mode t)
@@ -46,8 +54,8 @@
 
 ;; autopair
 (require 'autopair)
-(autopair-global-mode 1)
-(setq autopair-autowrap t)
+;(autopair-global-mode 1)
+;(setq autopair-autowrap t)
 
 ;; My c and cpp mode options!
 (load (expand-file-name "~/.emacs.d/my/my-c-and-c++-mode-options"))
@@ -114,24 +122,30 @@
 ;; GNU Assembler
 (setq asm-comment-char ?\#)
 
-;; sudo edit the current buffer
-(defun sudo-edit (&optional arg)
-  "Edit currently visited file as root.
+;; Rust mode
+(require 'rust-mode)
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+(setq rust-format-on-save nil)
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(add-hook 'racer-mode-hook #'company-mode)
+(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+(setq company-tooltip-align-annotations t)
 
-With a prefix ARG prompt for a file to visit.
-Will also prompt for a file to visit if current buffer is not visiting a file."
-  (interactive "P")
-  (if (or arg (not buffer-file-name))
-      (find-file (concat "/sudo:root@localhost:"
-                         (ido-read-file-name "Find file(as root):")))
-    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+;; camelCase to snake_case
+(defun split-name (s)
+  (split-string
+   (let ((case-fold-search nil))
+     (downcase
+      (replace-regexp-in-string "\\([a-z]\\)\\([A-Z]\\)" "\\1 \\2" s)))
+   "[^A-Za-z0-9]+"))
+(defun snake-case-string (s) (mapconcat 'downcase   (split-name s) "_"))
+(defun snake-case-region (begin end) (interactive "r")
+  (let* ((word (buffer-substring begin end))
+         (underscored (snake-case-string word)))
+    (save-excursion
+      (widen) ; break out of the subregion so we can fix every usage of the function
+      (replace-string word underscored nil (point-min) (point-max)))))
 
-;;
-(defadvice ido-find-file (after sudo-find-file activate)
-  "Find file as root if necessary."
-  (unless (and buffer-file-name
-               (file-writable-p buffer-file-name))
-    (find-alternate-file (concat "/sudo::" buffer-file-name))))
-
-(require 'ido)
-(ido-mode 't)
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "google-chrome")

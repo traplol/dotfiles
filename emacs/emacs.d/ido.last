@@ -1,0 +1,184 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("/home/max/meat-os/os/kernel/include/kernel/" . "fs/")
+ ("/home/max/Silver-Pig/os/kernel/src/memory/" . "paging/")
+ ("/home/max/Silver-Pig/os/kernel/src/" . "memory/")
+ ("/home/max/Silver-Pig/os/kernel/arch/" . "x86_64/")
+ ("/home/max/Silver-Pig/os/kernel/" . "src/")
+ ("/home/max/Silver-Pig/os/" . "kernel/")
+ ("/home/max/Silver-Pig/" . "os/")
+ ("/home/max/Downloads/" . "the_heap/")
+ ("/home/max/meat-os/os/libc/" . "include/")
+ ("/home/max/meat-os/os/" . "kernel/")
+ ("/home/max/meat-os/os/kernel/arch/" . "i386/")
+ ("/home/max/meat-os/os/kernel/include/" . "multiboot/")
+ ("/home/max/meat-os/os/kernel/" . "include/")
+ ("/home/max/meat-os/" . "os/")
+ ("/home/" . "max/")
+ ("/home/max/.config/" . "i3/")
+ ("/home/max/.emacs.d/" . "my/")
+ ("/home/max/" . "meat-os/")
+ ("/usr/local/libexec/" . "i3blocks/")
+ ("/usr/local/" . "libexec/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "/home/max/.emacs.d/my/"
+ "/home/max/meat-os/os/"
+ "/home/max/meat-os/os/kernel/include/multiboot/"
+ "/home/max/meat-os/os/kernel/arch/i386/"
+ "/home/max/meat-os/os/libc/"
+ "/home/max/meat-os/os/kernel/"
+ "/home/max/meat-os/os/kernel/memory/"
+ "/home/max/meat-os/os/libc/include/"
+ "/home/max/meat-os/os/libc/string/"
+ "/home/max/meat-os/os/kernel/include/kernel/"
+ "/home/max/"
+ "/home/max/.config/i3/"
+ "/home/max/.i3/"
+ "/home/max/Downloads/"
+ "/home/max/meat-os/os/kernel/fs/"
+ "/home/max/meat-os/os/kernel/include/kernel/fs/"
+ "/home/max/meat-os/tools/"
+ "/home/max/meat-os/os/kernel/multiboot/"
+ "/home/max/meat-os/"
+ "/home/max/Silver-Pig/os/"
+ "/home/max/meat-os/os/kernel/data/"
+ "/home/max/Downloads/src/"
+ "/home/max/meat-os/os/kernel/include/kernel/data/"
+ "/home/max/meat-os/os/libc/include/data/"
+ "/home/max/Silver-Pig/os/kernel/src/memory/"
+ "/home/max/Silver-Pig/os/kernel/src/memory/paging/"
+ "/home/max/Silver-Pig/os/kernel/src/"
+ "/home/max/Silver-Pig/os/kernel/"
+ "/home/max/Silver-Pig/os/kernel/arch/x86_64/"
+ "/home/max/Silver-Pig/os/kernel/arch/x86/"
+ "/home/max/Downloads/the_heap/src/"
+ "/sudo:root@Max:/usr/local/libexec/i3blocks/"
+ "/usr/local/libexec/i3blocks/"
+)
+
+;; ----- ido-work-file-list -----
+(
+ "init.el"
+ "agenda"
+ "iso.sh"
+ "multiboot.h"
+ "task.c"
+ "Makefile"
+ "build.sh"
+ "config.sh"
+ "timer.c"
+ "keyboard.c"
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("/home/max/.emacs.d/my/" (22753 20592 943312 16000) "my-c-and-c++-mode-options.el" "init.el" "my-compile.el" "my-lisp-modes-options.el" "./" "../" "my-lib.el" "packman/")
+
+ ("/home/max/" (22753 20497 915449 650000) ".oh-my-zsh/" ".gnome2_private/" ".local/" "lolOS/" "Templates/" ".vscode/" ".vim/" "opt/" ".fehbg" ".xargo/" ".mozilla/" ".Xauthority" ".nvidia-settings-rc" ".config/" ".ycm_extra_conf.py" "Music/" "Downloads/" ".gnupg/" "core" "VirtualBox VMs/" ".emacs.d/" ".gdb_history" "dotfiles/" ".ssh/" ".dbus/" ".lesshst" ".xsession-errors.old" ".gconf/" ".tmux/" ".bashrc" ".vimrc" "./" "meat-os/" ".zsh-update" ".gtkrc-2.0" ".profile" "Videos/" "testing/" ".ICEauthority" ".gitconfig" "i686-elf-cc-build/" "examples.desktop" ".backgrounds/" "Silver-Pig/" ".nv/" ".gdbinit" ".gnome/" ".i3blocks.conf" ".zcompdump" "../" "test.out" ".zsh_history" ".cargo/" ".gnome2/" ".i3/" ".bash_history" "os-from-scratch/" ".rustup/" ".viminfo" "linux-0.01/" "Public/" "Documents/" ".multirust/" ".tmux.conf" ".gksu.lock" ".bash_logout" "2017-03-31-211204_3200x900_scrot.png" ".sudo_as_admin_successful" ".pki/" "Pictures/" ".icons/" ".zcompdump-Max-5.1.1" "2017-03-31-211207_3200x900_scrot.png" ".compiz/" ".nemiver/" ".cache/" ".dosbox/" "trans.out" ".dmrc" "Desktop/" ".zshrc" ".python_history" ".mplayer/" ".xsession-errors")
+
+ ("/home/max/meat-os/os/kernel/data/" (22752 51050 238468 624000) "ordered_array.c" "ordered_array.o" "ordered_array.d" "./" "../")
+
+ ("/home/max/meat-os/os/kernel/fs/" (22752 51050 146468 665000) "fs.o" "initrd.c" "fs.c" "initrd.d" "fs.d" "./" "../" "initrd.o")
+
+ ("/home/max/meat-os/os/kernel/include/kernel/" (22752 49146 412902 468000) "tty.h" "timer.h" "kheap.h" "keyboard.h" "./" "initrd.h" "bits.h" "data/" "../" "macros.h" "string.h" "k_arch_init.h" "panic.h" "fs/" "paging.h")
+
+ ("/home/max/meat-os/os/kernel/memory/" (22752 51050 210468 637000) "kheap.o" "kheap.c" "./" "../" "kheap.d")
+
+ ("/home/max/meat-os/os/" (22753 16741 296513 659000) "sysroot/" "clean.sh" "agenda" "modules/" "headers.sh" ".gdb_history" "kernel/" "bochslog.txt" "iso.sh" "./" "isodir/" "qemu.sh" "config.sh" "bochsrc" "../" "default-host.sh" "build.sh" "meat-os.iso" "debug-iso.sh" "host-to-arch.sh" "libc/" "debug-kernel.sh")
+
+ ("/home/max/meat-os/os/kernel/arch/i386/" (22753 16694 272552 61000) "ports.h" "timer.d" "tty.o" "idt.o" "boot.d" "isr.o" "pic.c" "timer.o" "arch_init.o" "arch_init.d" "boot.S" "gdt.o" "gdt.d" "timer.h" "keyboard.h" "keyboard.c" "./" "keyboard.o" "arch_init.c" "interrupt.o" "keyboard.d" "task.c" "boot.o" "isr.c" "interrupt.S" "isr.h" "paging.c" "tty.d" "ports.c" "../" "paging.o" "unused/" "pic.h" "tty.c" "isr.d" "linker.ld" "config.make" "idt.d" "gdt.S" "ports.d" "idt.h" "paging.d" "interrupt.d" "ports.o" "timer.c" "idt.c" "multiboot.S" "multiboot2.S" "paging.h" "port_defs.h")
+
+ ("/home/max/meat-os/os/kernel/" (22752 51050 242468 622000) "kernel.c" "memory/" "arch/" "mkdir/" "./" "data/" "multiboot/" "meat-os.kernel" "../" "kernel.o" "kernel.d" "include/" "fs/" "Makefile" "string/")
+
+ ("/home/max/meat-os/os/kernel/multiboot/" (22752 41394 769662 357000) "./" "util.o" "../" "util.c" "util.d")
+
+ ("/home/max/meat-os/os/libc/string/" (22752 41394 285663 802000) "reverse.libk.o" "strcpy.libk.o" "memmove.c" "memcmp.libk.d" "itoa.libk.d" "reverse.libk.d" "memmove.libk.d" "strcmp.libk.o" "memcpy.c" "strlen.libk.d" "strcpy.libk.d" "memset.libk.d" "./" "memset.libk.o" "strcmp.libk.d" "itoa.c" "strcpy.c" "memcmp.c" "../" "itoa.libk.o" "reverse.c" "strlen.c" "memcpy.libk.d" "strlen.libk.o" "memcpy.libk.o" "memset.c" "memmove.libk.o" "strcmp.c" "memcmp.libk.o")
+
+ ("/home/max/meat-os/os/libc/" (22752 41394 325663 683000) "stdio/" "libk.a" "./" "../" "include/" "#stdarg.h#" "Makefile" "string/")
+
+ ("/home/max/meat-os/os/libc/include/" (22752 38780 694376 282000) "./" "stdio.h" "../" "string.h")
+
+ ("/home/max/Downloads/" (22752 26450 119113 47000) "i3-gaps/" "git-repos/" "multitasking/" "vfs/" "./" "multitasking.tar.gz" "../" "i3blocks.conf" "i3blocks/" "paper.txt" "playlist.pls" "fonts/" "code_1.10.2-1488981323_amd64.deb" "playlist (1).pls")
+
+ ("/home/max/.i3/" (22752 31444 830153 219000) "radio.sh" "server-stat.sh" "spotify.py" "./" "../" "trans.sh" "restart.sh")
+
+ ("/home/max/.config/" (22752 26550 334943 206000) "autostart/" "gnome-session/" "menus/" "dconf/" "cmus/" "ranger/" "eog/" "spotify/" "unity3d/" "upstart/" "nautilus/" "Thunar/" "ibus/" "pulse/" "hexchat/" "gtk-3.0/" "update-notifier/" "./" "libaccounts-glib/" "xfce4/" "google-chrome/" "unity/" "yelp/" "user-dirs.dirs" "../" "konsolerc" "cef_user_data/" "Code/" "enchant/" "mimeapps.list" "gedit/" "user-dirs.locale" "skypeforlinux/" "terminator/" "VirtualBox/" "compiz-1/" "gtk-2.0/" "compton.conf" "evolution/" "Trolltech.conf" "transmission/" "fontconfig/" "i3/")
+
+ ("/home/max/meat-os/os/kernel/include/kernel/data/" (22750 65251 516067 220000) "ordered_array.h" "./" "../" "type.h")
+
+ ("/home/max/meat-os/os/sysroot/usr/include/kernel/" (22751 222 191658 207000) "tty.h" "timer.h" "kheap.h" "keyboard.h" "./" "initrd.h" "bits.h" "data/" "../" "macros.h" "string.h" "k_arch_init.h" "panic.h" "fs/" "paging.h")
+
+ ("/home/max/meat-os/tools/" (22750 41101 383821 123000) "initrd.img" "./" "initrd-pack.cpp" "test.sh" "initrd-header.h" "initrd-unpack.cpp" "../" "pack" "unpack")
+
+ ("/home/max/meat-os/os/kernel/include/multiboot/" (22749 63193 822879 372000) "multiboot2.h" "./" "../" "multiboot.h" "util.h")
+
+ ("/home/max/meat-os/os/kernel/include/" (22749 50507 78037 490000) "kernel/" "./" "multiboot/" "../")
+
+ ("/home/max/meat-os/os/kernel/include/kernel/fs/" (22749 35039 844019 633000) "fs.h" "./" "../")
+
+ ("/home/max/meat-os/" (22749 35864 295011 963000) ".git/" ".gitignore" "./" ".dir-locals.el" "../" "tools/" ".clang_complete" "os/")
+
+ ("/home/max/.config/i3/" (22748 27041 459836 553000) "i3stat.sh" "./" "../" "i3status.conf" "config")
+
+ ("/home/max/Downloads/src/" (22748 17382 899903 107000) "common.h" "ordered_array.c" "ordered_array.h" "isr.o" "kheap.o" "timer.o" "boot.s" "gdt.o" "common.o" "main.o" "monitor.c" "kernel" "gdt.s" "timer.h" "ordered_array.o" "common.c" "kheap.h" "kheap.c" "./" "descriptor_tables.o" "interrupt.o" "boot.o" "isr.c" "isr.h" "paging.c" "../" "paging.o" "main.c" "timer.c" "monitor.o" "descriptor_tables.c" "descriptor_tables.h" "Makefile" "interrupt.s" "monitor.h" "paging.h" "link.ld")
+
+ ("/home/max/meat-os/os/libc/include/data/" (22747 60006 379569 562000) "ordered_array.h" "./" "../" "type.h")
+
+ ("/home/max/Silver-Pig/os/kernel/src/memory/" (22747 57136 670747 803000) "mod.rs" "./" "area_frame_allocator.rs" "paging/" "../")
+
+ ("/home/max/Silver-Pig/os/kernel/src/memory/paging/" (22747 57070 138826 49000) "mod.rs" "./" "entry.rs" "../" "table.rs")
+
+ ("/home/max/Silver-Pig/os/kernel/" (22747 14198 572970 157000) "arch/" ".gdb_history" "target/" "Cargo.toml" "./" "Cargo.lock" "../" "src/" "Makefile")
+
+ ("/home/max/Silver-Pig/os/kernel/src/" (22747 14304 868983 385000) "memory/" "./" "lib.rs" "../" "vga_buffer.rs")
+
+ ("/home/max/Silver-Pig/os/kernel/arch/x86_64/" (22747 13466 480403 28000) "multiboot.asm" "multiboot.o" "./" "boot.o" "../" "linker.ld" "config.make" "boot.asm")
+
+ ("/home/max/Silver-Pig/os/" (22747 629 597273 408000) "clean.sh" "debug.sh" "sp.iso" ".gdb_history" "kernel/" "target/" "iso.sh" "./" ".dir-locals.el" "isodir/" "qemu.sh" "config.sh" "arg.sh" "../" "grub.cfg" "build/" "do-build.sh")
+
+ ("/home/max/Silver-Pig/os/kernel/src/paging/" (22746 50055 172091 610000) "#entry.rs#" "mod.rs" "./" "../" ".#entry.rs")
+
+ ("/home/max/.emacs.d/" (22745 23897 534925 817000) "projectile-bookmarks.eld" ".gitignore" "init.el" "ido.last" "./" "auto-save-list/" "tramp" "ac-comphist.dat" "my/" "../" "elpa/" "var/" "snippets/")
+
+ ("/home/max/dotfiles/zsh/" (22745 14375 317137 676000) "./" "../" "bootstrap.sh" "zshrc" "oh-my-zsh/")
+
+ ("/home/max/dotfiles/" (22735 26952 500533 615000) ".gitmodules" "backup/" ".git/" ".gitignore" "bootstrap.sh.template" "vim/" "./" "README.md" "install.sh" "../" "emacs/" "zsh/" "gdbinit/" "tmux/")
+
+ ("/home/max/dotfiles/emacs/" (22735 26943 988472 211000) "./" "../" "bootstrap.sh" "emacs.d/")
+
+ ("/home/max/dotfiles/emacs/emacs.d/" (22744 63359 670664 156000) "projectile-bookmarks.eld" ".gitignore" "init.el" "ido.last" "./" "auto-save-list/" "tramp" "ac-comphist.dat" "my/" "../" "elpa/" "var/" "snippets/")
+
+ ("/home/max/dotfiles/emacs/emacs.d/my/" (22745 13820 285907 213000) "my-c-and-c++-mode-options.el" "init.el" "my-compile.el" ".#init.el" "my-lisp-modes-options.el" "./" "../" "my-lib.el" "packman/")
+
+ ("/home/max/Silver-Pig/os/isodir/" (22745 7593 463184 586000) "os.iso" "./" "../" "boot/")
+
+ ("/home/max/Silver-Pig/os/kernel/arch/" (22745 2747 677827 948000) "./" "../" "x86_64/")
+
+ ("/home/max/Silver-Pig/os/kernel/arch/x86/" (22744 63875 590199 222000) "multiboot.asm" "multiboot.o" "./" "multiboot" "../" "linker.ld")
+
+ ("/home/max/Silver-Pig/" (22744 62636 955796 159000) "./" "../" "os/")
+
+ ("/home/max/Downloads/the_heap/src/" (18373 42404 0 0) "common.h" "ordered_array.c" "ordered_array.h" "isr.o" "kheap.o" "timer.o" "boot.s" "gdt.o" "common.o" "main.o" "monitor.c" "kernel" "gdt.s" "timer.h" "ordered_array.o" "common.c" "kheap.h" "kheap.c" "./" "descriptor_tables.o" "interrupt.o" "boot.o" "isr.c" "isr.h" "paging.c" "../" "paging.o" "main.c" "timer.c" "monitor.o" "descriptor_tables.c" "descriptor_tables.h" "#kheap.c#" "Makefile" "interrupt.s" "monitor.h" "paging.h" "link.ld")
+
+ ("/home/max/Downloads/the_heap/" (22744 14138 55002 312000) "bochsrc.txt" "./" "run_bochs.sh" "the_heap.tar.gz" "floppy.img" "../" "update_image.sh" "src/")
+
+ ("/home/max/meat-os/os/kernel/arch/" (22741 14541 395209 436000) "i386/" "./" "../")
+
+ ("/usr/local/libexec/i3blocks/" (22743 13476 713833 122000) "volume" "bandwidth" "iface" "memory" "wifi" "./" "cpu_usage" "battery" "load_average" "../" "disk")
+
+ ("/usr/local/libexec/" (22742 44158 307182 742000) "./" "../" "i3blocks/")
+
+ ("/usr/local/" (22742 44158 307182 742000) "share/" "man/" "lib/" "./" "etc/" "../" "libexec/" "sbin/" "include/" "bin/" "src/" "games/" "i386elfgcc/")
+
+ ("/usr/" (22735 22910 718393 809000) "locale/" "share/" "lib/" "local/" "./" "../" "lib32/" "sbin/" "include/" "bin/" "src/" "games/")
+
+ ("/home/" (22735 21496 214929 10000) "./" "../" "max/")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t
