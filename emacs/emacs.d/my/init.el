@@ -149,3 +149,6 @@
 
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "google-chrome")
+
+;; Experimenting with transparency
+(set-frame-parameter (selected-frame) 'alpha '(90 90))

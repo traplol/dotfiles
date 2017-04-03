@@ -20,20 +20,20 @@
  ("/home/" . "max/")
  ("/home/max/.config/" . "i3/")
  ("/home/max/.emacs.d/" . "my/")
- ("/home/max/" . "meat-os/")
+ ("/home/max/" . ".emacs.d/")
  ("/usr/local/libexec/" . "i3blocks/")
  ("/usr/local/" . "libexec/")
 )
 
 ;; ----- ido-work-directory-list -----
 (
+ "/home/max/.emacs.d/my/"
  "/home/max/.emacs.d/"
  "/home/max/meat-os/os/kernel/include/kernel/"
  "/home/max/meat-os/os/kernel/arch/i386/"
  "/home/max/meat-os/os/"
  "/home/max/meat-os/os/kernel/"
  "/home/max/dotfiles/emacs/emacs.d/"
- "/home/max/.emacs.d/my/"
  "/home/max/.ssh/"
  "/home/max/meat-os/os/kernel/include/multiboot/"
  "/home/max/meat-os/os/libc/"
@@ -81,17 +81,19 @@
 
 ;; ----- ido-dir-file-cache -----
 (
- ("/home/max/.emacs.d/" (22753 44029 719466 698000) "projectile-bookmarks.eld" "eshell/" ".gitignore" "init.el" "ido.last" "./" "auto-save-list/" "url/" "tramp" "ac-comphist.dat" "my/" "../" "elpa/" "var/" "snippets/")
+ ("/home/max/Downloads/" (22753 41811 811377 561000) "i3-gaps/" "git-repos/" "multitasking/" "vfs/" "./" "multitasking.tar.gz" "xv6/" "../" "i3blocks.conf" "i3blocks/" "paper.txt" "playlist.pls" "fonts/" "code_1.10.2-1488981323_amd64.deb" "playlist (1).pls" "JMTK/")
 
- ("/home/max/" (22753 43068 509330 1000) ".oh-my-zsh/" ".gnome2_private/" ".local/" "lolOS/" "Templates/" ".vscode/" ".vim/" "opt/" ".fehbg" ".xargo/" ".mozilla/" ".Xauthority" ".nvidia-settings-rc" ".config/" ".ycm_extra_conf.py" "Music/" "Downloads/" ".gnupg/" "core" "VirtualBox VMs/" ".emacs.d/" ".gdb_history" "dotfiles/" ".ssh/" ".dbus/" ".lesshst" ".xsession-errors.old" ".gconf/" ".tmux/" ".bashrc" ".vimrc" "./" "meat-os/" ".zsh-update" ".gtkrc-2.0" ".profile" "Videos/" "testing/" ".ICEauthority" ".gitconfig" "i686-elf-cc-build/" "examples.desktop" ".backgrounds/" "Silver-Pig/" ".nv/" ".gdbinit" ".gnome/" ".i3blocks.conf" ".zcompdump" "../" "test.out" ".zsh_history" ".cargo/" ".gnome2/" ".i3/" ".bash_history" "os-from-scratch/" ".rustup/" ".viminfo" "linux-0.01/" "Public/" "Documents/" ".multirust/" ".tmux.conf" ".gksu.lock" ".bash_logout" "2017-03-31-211204_3200x900_scrot.png" ".sudo_as_admin_successful" ".pki/" "Pictures/" ".icons/" ".zcompdump-Max-5.1.1" "2017-03-31-211207_3200x900_scrot.png" ".compiz/" ".nemiver/" ".cache/" ".dosbox/" "trans.out" ".dmrc" "Desktop/" ".zshrc" ".python_history" ".mplayer/" ".xsession-errors")
+ ("/home/max/dotfiles/emacs/emacs.d/" (22753 44066 771414 120000) "projectile-bookmarks.eld" "eshell/" ".gitignore" "init.el" "ido.last" "./" "auto-save-list/" "url/" "tramp" "ac-comphist.dat" "my/" "../" "elpa/" "var/" "snippets/")
 
- ("/home/max/dotfiles/emacs/emacs.d/" (22753 44006 459500 59000) "projectile-bookmarks.eld" "eshell/" ".gitignore" "init.el" "ido.last" "./" "auto-save-list/" "url/" "tramp" "ac-comphist.dat" "my/" "../" "elpa/" "var/" "snippets/")
+ ("/home/max/meat-os/os/kernel/include/kernel/" (22753 38719 156872 748000) "tty.h" "timer.h" "kheap.h" "keyboard.h" "spinlock.h" "./" "initrd.h" "bits.h" "data/" "../" "serial.h" "macros.h" "string.h" "k_arch_init.h" "panic.h" "fs/" "paging.h")
+
+ ("/home/max/.emacs.d/" (22753 44066 771414 120000) "projectile-bookmarks.eld" "eshell/" ".gitignore" "init.el" "ido.last" "./" "auto-save-list/" "url/" "tramp" "ac-comphist.dat" "my/" "../" "elpa/" "var/" "snippets/")
+
+ ("/home/max/" (22753 44093 619376 434000) ".oh-my-zsh/" ".gnome2_private/" ".local/" "lolOS/" "Templates/" ".vscode/" ".vim/" "opt/" ".fehbg" ".xargo/" ".mozilla/" ".Xauthority" ".nvidia-settings-rc" ".config/" ".ycm_extra_conf.py" "Music/" "Downloads/" ".gnupg/" "core" "VirtualBox VMs/" ".emacs.d/" ".gdb_history" "dotfiles/" ".ssh/" ".dbus/" ".lesshst" ".xsession-errors.old" ".gconf/" ".tmux/" ".bashrc" ".vimrc" "./" "meat-os/" ".zsh-update" ".gtkrc-2.0" ".profile" "Videos/" "testing/" ".ICEauthority" ".gitconfig" "i686-elf-cc-build/" "examples.desktop" ".backgrounds/" "Silver-Pig/" ".nv/" ".gdbinit" ".gnome/" ".i3blocks.conf" ".zcompdump" "../" "test.out" ".zsh_history" ".cargo/" ".gnome2/" ".i3/" ".bash_history" "os-from-scratch/" ".rustup/" ".viminfo" "linux-0.01/" "Public/" "Documents/" ".multirust/" ".tmux.conf" ".gksu.lock" ".bash_logout" "2017-03-31-211204_3200x900_scrot.png" ".sudo_as_admin_successful" ".pki/" "Pictures/" ".icons/" ".zcompdump-Max-5.1.1" "2017-03-31-211207_3200x900_scrot.png" ".compiz/" ".nemiver/" ".cache/" ".dosbox/" "trans.out" ".dmrc" "Desktop/" ".zshrc" ".python_history" ".mplayer/" ".xsession-errors")
 
  ("/home/max/meat-os/os/kernel/arch/i386/" (22753 39302 977604 682000) "ports.h" "timer.d" "tty.o" "idt.o" "boot.d" "isr.o" "pic.c" "timer.o" "arch_init.o" "arch_init.d" "boot.S" "gdt.o" "task_switch.S" "gdt.d" "timer.h" "keyboard.h" "keyboard.c" "./" "keyboard.o" "x86.h" "arch_init.c" "interrupt.o" "keyboard.d" "task.c" "serial.c" "boot.o" "task_switch.h" "isr.c" "interrupt.S" "isr.h" "paging.c" "tty.d" "ports.c" "../" "paging.o" "unused/" "serial.h" "pic.h" "tty.c" "isr.d" "linker.ld" "config.make" "idt.d" "gdt.S" "ports.d" "idt.h" "paging.d" "interrupt.d" "ports.o" "timer.c" "idt.c" "multiboot.S" "serial.o" "serial.d" "spinlock.c" "multiboot2.S" "paging.h" "port_defs.h")
 
  ("/home/max/meat-os/os/kernel/" (22753 38477 845112 525000) "kernel.c" "memory/" "arch/" "mkdir/" "./" "data/" "multiboot/" "meat-os.kernel" "../" "kernel.o" "kernel.d" "include/" "fs/" "Makefile" "string/")
-
- ("/home/max/meat-os/os/kernel/include/kernel/" (22753 38371 506867 730000) "tty.h" "timer.h" "kheap.h" "keyboard.h" "spinlock.h" "./" "initrd.h" "bits.h" "data/" "../" "serial.h" "macros.h" "string.h" "k_arch_init.h" "panic.h" "fs/" "paging.h")
 
  ("/home/max/meat-os/os/kernel/lock/" (22753 38451 752600 993000) "./" "../" "spinlock.c")
 
@@ -108,8 +110,6 @@
  ("/home/max/meat-os/os/kernel/memory/" (22753 34368 51113 533000) "kheap.o" "kheap.c" "./" "../" "kheap.d")
 
  ("/home/max/meat-os/os/libc/" (22753 34367 655122 579000) "stdio/" "libk.a" "./" "../" "include/" "#stdarg.h#" "Makefile" "string/")
-
- ("/home/max/Downloads/" (22753 31741 631436 345000) "i3-gaps/" "git-repos/" "multitasking/" "vfs/" "./" "multitasking.tar.gz" "xv6/" "../" "i3blocks.conf" "i3blocks/" "paper.txt" "playlist.pls" "fonts/" "code_1.10.2-1488981323_amd64.deb" "playlist (1).pls")
 
  ("/home/max/.i3/" (22753 24573 300005 717000) "mpc-station" "radio.sh" "server-stat.sh" "spotify.py" "./" "mpc-stations.sh" "../" "radio" "trans.sh" "restart.sh")
 
