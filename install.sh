@@ -21,18 +21,20 @@ cd $dir
 mkdir -p "backup"
 
 help_msg() {
-    echo "usage: $this_script [OPTIONS]"
-    echo "  -h --help               Display this message."
-    echo "  -c --clone-submodules   Clone git submodules."
-    echo "  -u --update             Updates, then reruns the script minus the"
-    echo "                          '-u' and '--update' flags."
-    echo "  -n --no-link            Does not create symbolic links to dotfiles."
-    echo "  -g --generate [NAME]    Creates a directory and copies bootstrap.sh.template"
-    echo "                          to the new directory as bootstrap.sh."
-    echo "  --uninstall             Removes the generated symbolic links and restores"
-    echo "                          any backups that were saved."
-    echo ""
-    exit 0
+    cat<<EOF
+    usage: $this_script [OPTIONS]
+      -h --help               Display this message.
+      -c --clone-submodules   Clone git submodules.
+      -u --update             Updates, then reruns the script minus the
+                              '-u' and '--update' flags.
+      -n --no-link            Does not create symbolic links to dotfiles.
+      -g --generate [NAME]    Creates a directory and copies bootstrap.sh.template
+                              to the new directory as bootstrap.sh.
+      --uninstall             Removes the generated symbolic links and restores
+                              any backups that were saved.
+
+EOF
+    exit 1
 }
 
 clone_submodules() {
@@ -140,8 +142,6 @@ fi
 
 if [[ "$unknown_options_flag" ]] ; then
     help_msg
-    echo "Stopping."
-    exit 1
 fi
 
 if [[ "$help_msg_flag" ]] ; then
