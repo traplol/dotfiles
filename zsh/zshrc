@@ -85,3 +85,6 @@ source $ZSH/oh-my-zsh.sh
 unset JAVA_TOOL_OPTIONS
 
 source $HOME/.profile
+
+export NVM_DIR="/home/max/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

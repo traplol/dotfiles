@@ -1,7 +1,10 @@
 # -*- mode: gitignore; -*-
 
+ido.last
+
 auto-save-list
 *.dat
+
 
 *~
 \#*\#
@@ -20,11 +23,13 @@ tramp
 *_flymake.*
 
 # eshell files
-/eshell/history
-/eshell/lastdir
+/eshell/
 
 # elpa packages
 /elpa/
 
 /url/
 /irony/
+
+/var/
+/url/

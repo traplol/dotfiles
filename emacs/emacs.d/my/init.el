@@ -17,8 +17,8 @@
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8)
 (set-default-font "DejaVu Sans Mono 15")
-(require 'unicode-fonts)
-(unicode-fonts-setup)
+;(require 'unicode-fonts)
+;(unicode-fonts-setup)
 
 ;; auto-refresh buffers that change on disk
 (global-auto-revert-mode t)
@@ -151,4 +151,8 @@
       browse-url-generic-program "google-chrome")
 
 ;; Experimenting with transparency
-(set-frame-parameter (selected-frame) 'alpha '(90 90))
+(set-frame-parameter (selected-frame) 'alpha '(98 98))
+
+(find-file (expand-file-name "~/.notes/general.org"))
+
+(global-set-key (kbd "C-x C-p") #'find-file-at-point)
