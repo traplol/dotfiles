@@ -18,13 +18,23 @@ elif [[ "$STATE" == "paused" ]] ; then
 fi
 
 if [[ "$1" == "info" ]] ; then
+    if [[ "$2" == "--i3" ]] ; then
+        ROTFILE="/tmp/rot.txt"
+        touch "$ROTFILE"
+        read ROT < "$ROTFILE"
+        (( ROT++ ))
+        MAXLEN=50
+        echo "$ROT" > "$ROTFILE"
+    else
+        ROT=0
+        MAXLEN=9999
+    fi
+    
     if [ $MPC_ACTIVE ] ; then
         SONG=$(echo "$MPC_MSG" | gawk 'NR==1{print $0}')
-        echo "$SONG"
-        echo "$SONG"
-        echo "#aa55ee"
+        echo "$(~/.i3/rotate.rb $ROT $MAXLEN "$SONG")"
     else
-        ~/.i3/spotify.py --format=" %(artist)s - %(title)s " --color=#93a1a1
+        ~/.i3/spotify.py --format=' %(artist)s - %(title)s ' --color=#93a1a1 --rotate=$ROT --maxlen=$MAXLEN
     fi
     exit 0
 fi

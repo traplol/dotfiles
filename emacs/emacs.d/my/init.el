@@ -11,14 +11,31 @@
 
 ;; IDO
 (require 'ido)
-(ido-mode 't)
+(let ()
+  (setq ido-enable-flex-matching t)
+  (setq ido-everywhere t)
+  (setq ido-use-filename-at-point 'guess)
+  (setq ido-create-new-buffer 'always)
+  (ido-mode 1))
 
+;; Flymake Cursor
+(eval-after-load 'flymake '(require 'flymake-cursor))
+(custom-set-variables
+ '(help-at-pt-timer-delay 0.9)
+ '(help-at-pt-display-when-idle '(flymake-overlay)))
 ;; Font stuff
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8)
-(set-default-font "DejaVu Sans Mono 15")
+(set-default-font "DejaVu Sans Mono 10")
 ;(require 'unicode-fonts)
 ;(unicode-fonts-setup)
+
+(require 'ansi-color)
+(defun colorize-compilation-buffer ()
+  (toggle-read-only)
+  (ansi-color-apply-on-region compilation-filter-start (point))
+  (toggle-read-only))
+(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
 ;; auto-refresh buffers that change on disk
 (global-auto-revert-mode t)
@@ -61,6 +78,15 @@
 (load (expand-file-name "~/.emacs.d/my/my-c-and-c++-mode-options"))
 ;; My lisp mode options
 (load (expand-file-name "~/.emacs.d/my/my-lisp-modes-options"))
+;; My Tupfile mode
+(load (expand-file-name "~/.emacs.d/my/my-tup-mode"))
+(require 'tup-mode)
+(add-to-list 'auto-mode-alist '("\\.tup\\'" . tup-mode))
+(add-to-list 'auto-mode-alist '("\\Tupfile\\'" . tup-mode))
+
+;; My Malang mode
+(load (expand-file-name "~/.emacs.d/my/malang-mode"))
+(add-to-list 'auto-mode-alist '("\\.ma\\'" . mal-mode))
 
 ;; Inline eval-replace sexp.
 (defun my-replace-last-sexp ()
@@ -79,10 +105,18 @@
   (flycheck-mode 1)
   (irony-mode 1))
 
-(add-hook 'c++-mode-hook (lambda ()
-                           (setq flycheck-clang-language-standard "c++11")))
-(add-hook 'c++-mode-hook 'my-c-mode-hook)
-(add-hook 'c-mode-hook 'my-c-mode-hook)
+(add-hook 'c++-mode-hook
+          (lambda ()
+            (c-set-offset 'case-label '+)
+            (company-mode 1)
+            (company-irony 1)
+            (flycheck-mode 1)
+            (irony-mode 1)
+            (setq flycheck-clang-language-standard "c++1z")
+            (setq flycheck-clang-include-path
+                  (list (expand-file-name "~/workspace/c++/header-libs/")))))
+;(add-hook 'c++-mode-hook 'my-c-mode-hook)
+;(add-hook 'c-mode-hook 'my-c-mode-hook)
 (add-hook 'c-mode-hook (lambda ()
                          (setq flycheck-clang-language-standard "c99")))
 (add-hook 'objc-mode-hook 'my-c-mode-hook)
@@ -120,7 +154,7 @@
 (add-to-list 'auto-mode-alist '("\\.js.erb\\'" . my-js-erb-modes))
 
 ;; GNU Assembler
-(setq asm-comment-char ?\#)
+(setq asm-comment-char ?\#) ; set the comment char to # or ;
 
 ;; Rust mode
 (require 'rust-mode)
@@ -131,6 +165,14 @@
 (add-hook 'racer-mode-hook #'company-mode)
 (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
 (setq company-tooltip-align-annotations t)
+
+;; Haskell mode
+(require 'haskell-mode)
+;(add-to-list 'auto-mode-alist '("\\.hs\\'" . haskell-mode))
+;(eval-after-load 'flycheck '(add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
+;(add-hook 'haskell-mode-hook #'flycheck-mode-hook)
+(require 'flymake-haskell-multi)
+(add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
 
 ;; camelCase to snake_case
 (defun split-name (s)

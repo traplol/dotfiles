@@ -10,17 +10,31 @@ arg_parser.add_argument(
     "--format",
     default='%(title)s by %(artist)s',
     type=str,
-    help='the output format, available params are "title", "album", "artist", "length" (default:"%%(title)s by %%(artist)s")'
-)
+    help='the output format, available params are "title", "album", "artist", "length" (default:"%%(title)s by %%(artist)s")')
 
 arg_parser.add_argument(
     '--color',
     default="#ffffff",
     type=str,
-    help='the html hex color string to output (default:#ffffff)'
-)
+    help='the html hex color string to output (default:#ffffff)')
+
+arg_parser.add_argument(
+    '--rotate',
+    default=0,
+    type=int,
+    help='how much to rotate the list')
+
+arg_parser.add_argument(
+    '--maxlen',
+    default=-1,
+    type=int,
+    help='maximum length of the string to display')
+
 args = arg_parser.parse_args()
 
+def rotate(l, n):
+    n = n % len(l)
+    return l[n:] + l[:n]
 
 def main():
     spotify = dbus.SessionBus().get_object('org.mpris.MediaPlayer2.spotify', '/org/mpris/MediaPlayer2')
@@ -38,6 +52,10 @@ def main():
         "length" : timedelta(seconds=int(length/1000000)), # length is in microseconds
     }
     out = args.format % fmt_params
+    if len(out) > args.maxlen:
+        rotated = rotate(out, args.rotate)
+        substr = rotated[0:args.maxlen]
+        out = substr
 
     print(out)
     print(out)
