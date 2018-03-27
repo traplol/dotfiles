@@ -22,7 +22,7 @@
  '(org-babel-load-languages (quote ((python . t) (C . t) (emacs-lisp . t))))
  '(package-selected-packages
    (quote
-    (ensime scala-mode php-mode d-mode flymake-cursor flymake-haskell-multi markdown-mode flycheck-haskell haskell-mode yasnippet unicode-fonts ruby-end rainbow-delimiters racer paredit magit go-mode flycheck-rust flycheck-irony evil-numbers evil company-irony bison-mode autopair auto-complete))))
+    (kotlin-mode omnisharp csharp-mode vue-mode ensime scala-mode php-mode d-mode flymake-cursor flymake-haskell-multi markdown-mode flycheck-haskell haskell-mode yasnippet unicode-fonts ruby-end rainbow-delimiters racer paredit magit go-mode flycheck-rust flycheck-irony evil-numbers evil company-irony bison-mode autopair auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

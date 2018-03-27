@@ -34,7 +34,7 @@ class Coin
       if trim
         p = '%.0f' % p
       else
-        p = '%.2f' % p
+        p = '%.3f' % p
       end
     end
     "#{sym}:$#{p}"

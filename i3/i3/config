@@ -136,8 +136,8 @@ mode "resize" {
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
         bindsym h resize shrink width 2 px or 2 ppt
-        bindsym j resize grow height 2 px or 2 ppt
-        bindsym k resize shrink height 2 px or 2 ppt
+        bindsym j resize shrink height 2 px or 2 ppt
+        bindsym k resize grow height 2 px or 2 ppt
         bindsym l resize grow width 2 px or 2 ppt
 
         # same bindings, but for the arrow keys
@@ -156,11 +156,11 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+    tray_output DVI-I-0
+    output DVI-D-0
     font pango:Droid Sans Mono Dotted for Powerline 8
-    #font pango:terminesspowerline 15
-    status_command i3blocks
+    status_command i3blocks -c /home/max/.i3/blocks-left
     height 14
-    tray_output primary
     colors {
         background #021215
         statusline #93a1a1 
@@ -173,19 +173,36 @@ bar {
         urgent_workspace   #cb4b16 #dc322f #fdf6e3
     }
 }
+bar {
+    output DVI-I-0
+    font pango:Droid Sans Mono Dotted for Powerline 8
+    status_command i3blocks -c /home/max/.i3/blocks-right
+    height 14
+    colors {
+        background #021215
+        statusline #93a1a1 
+        #separator #2aa198
+
+        # Type              border  background font
+        focused_workspace  #2aa198 #073642 #eee895
+        active_workspace   #073642 #002b36 #839496
+        inactive_workspace #002b36 #021215 #586e75
+        urgent_workspace   #cb4b16 #dc322f #fdf6e3
+    }
+}
 
 ###########################
 # Associate ws with monitor
 ###########################
-workspace 1 output DVI-D-0
-workspace 2 output DVI-D-0
-workspace 3 output DVI-D-0
-workspace 4 output DVI-D-0
-workspace 5 output DVI-D-0
-workspace 6 output DVI-I-0
-workspace 7 output DVI-I-0
-workspace 8 output DVI-I-0
-workspace 9 output DVI-I-0
+workspace  1 output DVI-D-0
+workspace  2 output DVI-D-0
+workspace  3 output DVI-D-0
+workspace  4 output DVI-D-0
+workspace  5 output DVI-D-0
+workspace  6 output DVI-I-0
+workspace  7 output DVI-I-0
+workspace  8 output DVI-I-0
+workspace  9 output DVI-I-0
 workspace 10 output DVI-I-0
 
 

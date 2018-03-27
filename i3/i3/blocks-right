@@ -33,23 +33,8 @@ separator=false
 separator_block_width=0
 markup=pango
 
-[separator2]
-full_text=
-color=#002b36
-background=#021215
-
-[radioinfo]
-command=radio info --i3
-interval=1
-background=#002b36
-
-[separator1]
-full_text=
-background=#002b36
-color=#021215
-
 [crypto]
-command=crypto-price --i3 --trim BTC --trim LTC --trim ETH XRP
+command=crypto-price
 interval=10
 
 [separator2]
@@ -165,7 +150,7 @@ color=#338fcc
 # Date Time
 #
 [now]
-command=echo " $(date '+%T') "
+command=echo " $(TZ='Asia/Hong_Kong' date '+HK%H')|$(TZ='Europe/London' date '+LN%H')|$(date '+%T') "
 interval=1
 background=#338fcc
 color=#002b36

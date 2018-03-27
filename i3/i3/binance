@@ -1,0 +1,16 @@
+#!/usr/bin/env pry
+
+require 'net/http'
+require 'json'
+
+symbol = (ARGV[1] || "BTCUSDT").upcase
+uri = URI("https://api.binance.com/api/v3/ticker/price?symbol=#{symbol}")
+resp = JSON.parse(Net::HTTP.get(uri))
+
+if not resp["msg"].nil?
+  puts resp["msg"]
+elsif not resp["price"].nil?
+  puts resp["price"]
+else
+  puts resp
+end
