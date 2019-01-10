@@ -33,9 +33,18 @@ separator=false
 separator_block_width=0
 markup=pango
 
-[crypto]
-command=crypto-price
-interval=10
+[radioinfo]
+command=radio info --i3
+interval=1
+color=#002b36
+background=#021215
+
+[motion]
+command=$HOME/workspace/security-cam/motion_blocklet.rb $BLOCK_BUTTON
+interval=once
+color=#002b36
+background=#021215
+signal=2
 
 [separator2]
 full_text=
@@ -49,9 +58,9 @@ background=#021215
 # See the script for details.
 [volume]
 background=#002b36
-label=  🔊
 instance=Master
-interval=1
+interval=once
+signal=1
 
 [separator1]
 full_text=
@@ -62,9 +71,8 @@ color=#021215
 #
 # The type defaults to "mem" if the instance is not specified.
 [memory]
-label=  🐏
+label=
 interval=1
-
 
 [separator2]
 full_text=
@@ -76,9 +84,9 @@ background=#021215
 # The script may be called with -w and -c switches to specify thresholds,
 # see the script for details.
 [cpu_usage]
-label=  📈
+label=
 interval=1
-min_width=:  📈 00.00%
+min_width=:C00.00%
 background=#002b36
 
 [separator1]
@@ -92,7 +100,7 @@ color=#021215
 # The script may be called with a optional argument to set the alert
 # (defaults to 10 for 10%).
 [disk]
-label=  🖴
+label=
 separator=true
 interval=5
 
@@ -106,29 +114,31 @@ background=#021215
 # If the instance is not specified, use the interface used for default route.
 # The address can be forced to IPv4 or IPv6 with -4 or -6 switches.
 [iface]
-label=  🔗
 color=#00FF00
 interval=5
 #instance=enp5s0
 background=#002b36
 
 [pi-stat]
-label=  🔗
-command=~/.i3/server-stat.sh raspberrypi.local "P" "P"
+command=~/.i3/server-stat.sh 192.168.1.142 " P" " P"
 interval=20
 background=#002b36
 
 [server-stat]
-label=  🔗
 command=~/.i3/server-stat.sh 192.168.1.10 "S" "S"
 interval=20
 background=#002b36
 
 [inet-stat]
-label=  🔗
-command=~/.i3/server-stat.sh 8.8.8.8 "I" "I"
+command=~/.i3/server-stat.sh 8.8.8.8 "I " "I "
 interval=20
 background=#002b36
+
+[test123]
+command=ifstat -w -b 1 1 | awk 'NR>2 { printf "%.2f/%.2f Mbps", $1/1024.0, $2/1024.0 }'
+interval=1
+background=#002b36
+
 
 [separator1]
 full_text=
@@ -138,7 +148,6 @@ color=#021215
 # Date Time
 #
 [today]
-label=  📅
 command=echo " $(date '+%a %b %d') "
 interval=1
 
@@ -150,7 +159,7 @@ color=#338fcc
 # Date Time
 #
 [now]
-command=echo " $(TZ='Asia/Hong_Kong' date '+HK%H')|$(TZ='Europe/London' date '+LN%H')|$(date '+%T') "
+command=echo " $(date '+%T') "
 interval=1
 background=#338fcc
 color=#002b36

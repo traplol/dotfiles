@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import hmac, base64, struct, hashlib, time, sys
+import hmac, base64, struct, hashlib, time, sys, os
 
 def get_hotp_token(secret, intervals_no):
     try:
@@ -33,6 +33,7 @@ if __name__ == "__main__":
             print("#ff0000")
         else:
             output = "{}:{} ".format(sys.argv[1], token)
+            tmpfile = "/tmp/{}".format(sys.argv[1])
             print(output)
             print(output)
             print("#00ff00")
@@ -42,4 +43,3 @@ if __name__ == "__main__":
         print(output)
     else:
         print(sys.argv)
-        

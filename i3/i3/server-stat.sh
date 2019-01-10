@@ -22,11 +22,11 @@ ping -c 1 -i .2 $TARGET &> /dev/null
 STATUS=$?
 
 if [ $STATUS -ne 0 ] ; then
-    echo " $DOWN "
-    echo " $TARGET: $DOWN "
+    echo "$DOWN"
+    echo "$TARGET: $DOWN"
     echo "#ff0000"
 else
-    echo " $UP "
-    echo " $TARGET: $UP "
+    echo "$UP"
+    echo "$TARGET: $UP"
     echo "#00ff00"
 fi

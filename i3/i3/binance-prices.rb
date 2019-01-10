@@ -109,5 +109,5 @@ def calculate_prices(coins)
   return [out, out]
 end
 
-calculate_prices(["BTC", "ETH", "NEO", "ICX", "VEN"]).each{|o| puts o}
+calculate_prices(["BTC", "ETH", "NEO", "BNB", "ICX", "IOTA", "NCASH"]).each{|o| puts o}
 #calculate_prices(["BTC"]).each{|o| puts o}

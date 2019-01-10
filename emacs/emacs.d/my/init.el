@@ -1,3 +1,12 @@
+;; Sets environment variables from shell
+(require 'exec-path-from-shell)
+(exec-path-from-shell-initialize)
+
+;; store backup and autosave files in /tmp directory
+(setq backup-directory-alist `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+(setq create-lockfiles nil)
+
 ;; Disable the toolbar in gui-mode
 (tool-bar-mode -1)
 ;; Disable the menubar
@@ -7,7 +16,14 @@
 ;; Disable backup files (*~ files)
 (setq make-backup-files nil)
 ;; Emacs server
-(server-start)
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+
+(require 'evil)
+(evil-mode 1)
+
+(require 'company)
 
 ;; IDO
 (require 'ido)
@@ -58,16 +74,6 @@
 (require 'yasnippet)
 (yas-global-mode 1)
 
-;; evil-mode
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/evil"))
-(require 'evil)
-(evil-mode 1)
-;; Use Emacs keybindings when in insert mode.
-(setcdr evil-insert-state-map nil)
-(define-key evil-insert-state-map [escape] 'evil-normal-state)
-(require 'evil-numbers)
-(global-set-key (kbd "C-c a") 'evil-numbers/inc-at-pt)
-(global-set-key (kbd "C-c x") 'evil-numbers/dec-at-pt)
 
 ;; autopair
 (require 'autopair)
@@ -88,46 +94,19 @@
 (load (expand-file-name "~/.emacs.d/my/malang-mode"))
 (add-to-list 'auto-mode-alist '("\\.ma\\'" . mal-mode))
 
-;; Inline eval-replace sexp.
-(defun my-replace-last-sexp ()
-  (interactive)
-  (let ((value (eval (preceding-sexp))))
-    (kill-sexp -1)
-    (insert (format "%S" value))))
+;; OCaml config
+(load (expand-file-name "~/.emacs.d/my/my-ocaml-mode-config"))
 
 ;; irony-mode
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-
-(defun my-c-mode-hook ()
-  (c-set-offset 'case-label '+)
-  (company-mode 1)
-  (company-irony 1)
-  (flycheck-mode 1)
-  (irony-mode 1))
-
-(add-hook 'c++-mode-hook
-          (lambda ()
-            (c-set-offset 'case-label '+)
-            (company-mode 1)
-            (company-irony 1)
-            (flycheck-mode 1)
-            (irony-mode 1)
-            (setq flycheck-clang-language-standard "c++1z")
-            (setq flycheck-clang-include-path
-                  (list (expand-file-name "~/workspace/c++/header-libs/")))))
-;(add-hook 'c++-mode-hook 'my-c-mode-hook)
-;(add-hook 'c-mode-hook 'my-c-mode-hook)
-(add-hook 'c-mode-hook (lambda ()
-                         (setq flycheck-clang-language-standard "c99")))
-(add-hook 'objc-mode-hook 'my-c-mode-hook)
+;(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
 (defun my-irony-mode-hook ()
   (define-key irony-mode-map [remap completion-at-point]
 	'irony-completion-at-point-async)
   (define-key irony-mode-map [remap complete-symbol]
 	'irony-completion-at-point-async))
-(add-hook 'irony-mode-hook 'my-irony-mode-hook)
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+;(add-hook 'irony-mode-hook 'my-irony-mode-hook) ;
+;(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
 (defun my-go-mode-hook ()
   (setq tab-width 4)
@@ -135,7 +114,6 @@
   (add-hook 'before-save-hook 'gofmt-before-save))
 
 (add-hook 'go-mode-hook 'my-go-mode-hook)
-
 
 (add-hook 'html-mode-hook 'web-mode)
 
@@ -160,41 +138,58 @@
 (require 'rust-mode)
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
 (setq rust-format-on-save nil)
-(add-hook 'rust-mode-hook #'racer-mode)
-(add-hook 'racer-mode-hook #'eldoc-mode)
-(add-hook 'racer-mode-hook #'company-mode)
+(add-hook 'rust-mode-hook 'racer-mode)
+(add-hook 'racer-mode-hook 'eldoc-mode)
+(add-hook 'racer-mode-hook 'company-mode)
 (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
 (setq company-tooltip-align-annotations t)
 
 ;; Haskell mode
 (require 'haskell-mode)
 ;(add-to-list 'auto-mode-alist '("\\.hs\\'" . haskell-mode))
-;(eval-after-load 'flycheck '(add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
-;(add-hook 'haskell-mode-hook #'flycheck-mode-hook)
+;(eval-after-load 'flycheck '(add-hook 'flycheck-mode-hook 'flycheck-haskell-setup))
+;(add-hook 'haskell-mode-hook 'flycheck-mode-hook)
 (require 'flymake-haskell-multi)
 (add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
 
-;; camelCase to snake_case
-(defun split-name (s)
-  (split-string
-   (let ((case-fold-search nil))
-     (downcase
-      (replace-regexp-in-string "\\([a-z]\\)\\([A-Z]\\)" "\\1 \\2" s)))
-   "[^A-Za-z0-9]+"))
-(defun snake-case-string (s) (mapconcat 'downcase   (split-name s) "_"))
-(defun snake-case-region (begin end) (interactive "r")
-  (let* ((word (buffer-substring begin end))
-         (underscored (snake-case-string word)))
-    (save-excursion
-      (widen) ; break out of the subregion so we can fix every usage of the function
-      (replace-string word underscored nil (point-min) (point-max)))))
+(require 'omnisharp)
+(require 'csharp-mode)
+(eval-after-load 'company '(add-to-list 'company-backends 'company-omnisharp))
+(defun my-csharp-mode-setup ()
+  (omnisharp-mode)
+  (company-mode)
+  (flycheck-mode)
+
+  (setq indent-tabs-mode nil)
+  (setq c-syntactic-indentation t)
+  (c-set-style "ellemtel")
+  (setq c-basic-offset 4)
+  (setq truncate-lines t)
+  (setq tab-width 4)
+  (setq evil-shift-width 4)
+  (electric-pair-local-mode 1)
+  (set (make-local-variable 'compile-command) "dotnet build")
+  (local-set-key (kbd "C-c C-c") 'recompile)
+  (local-set-key (kbd "<f5>") 'recompile))
+(add-hook 'csharp-mode-hook 'my-csharp-mode-setup t)
 
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "google-chrome")
 
 ;; Experimenting with transparency
 (set-frame-parameter (selected-frame) 'alpha '(98 98))
+(require 'neotree)
+(evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
+(evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
+(evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
+(evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
+(evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
+(evil-define-key 'normal neotree-mode-map (kbd "n") 'neotree-next-line)
+(evil-define-key 'normal neotree-mode-map (kbd "p") 'neotree-previous-line)
+(evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
+(evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
+
+;; My Keyboard shortcut overrides
+(load (expand-file-name "~/.emacs.d/my/my-keyboard-overrides"))
 
 (find-file (expand-file-name "~/.notes/general.org"))
-
-(global-set-key (kbd "C-x C-p") #'find-file-at-point)

@@ -1,4 +1,11 @@
 ;;; Load my packman.
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (load (expand-file-name "~/.emacs.d/my/packman/packman.el"))
 
 ;;; Load my init.
@@ -22,7 +29,7 @@
  '(org-babel-load-languages (quote ((python . t) (C . t) (emacs-lisp . t))))
  '(package-selected-packages
    (quote
-    (kotlin-mode omnisharp csharp-mode vue-mode ensime scala-mode php-mode d-mode flymake-cursor flymake-haskell-multi markdown-mode flycheck-haskell haskell-mode yasnippet unicode-fonts ruby-end rainbow-delimiters racer paredit magit go-mode flycheck-rust flycheck-irony evil-numbers evil company-irony bison-mode autopair auto-complete))))
+    (company-irony-c-headers irony-eldoc neotree exec-path-from-shell rmsbolt racket-mode kotlin-mode csharp-mode vue-mode ensime scala-mode php-mode d-mode flymake-cursor flymake-haskell-multi markdown-mode flycheck-haskell haskell-mode unicode-fonts ruby-end rainbow-delimiters racer paredit magit go-mode flycheck-rust flycheck-irony evil-numbers evil company-irony bison-mode autopair auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -37,3 +44,6 @@
  '(rainbow-delimiters-depth-7-face ((t (:foreground "turquoise4"))))
  '(rainbow-delimiters-depth-8-face ((t (:foreground "medium blue"))))
  '(rainbow-delimiters-depth-9-face ((t (:foreground "chocolate")))))
+;; ## added by OPAM user-setup for emacs / base ## 56ab50dc8996d2bb95e7856a6eddb17b ## you can edit, but keep this line
+(require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
+;; ## end of OPAM user-setup addition for emacs / base ## keep this line
