@@ -6,6 +6,7 @@ auto-save-list
 *.dat
 
 .cache
+.project-time.save.el
 
 *~
 \#*\#

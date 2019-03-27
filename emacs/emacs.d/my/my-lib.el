@@ -1,17 +1,22 @@
 (require 'cl)
 
+(defun my-no-op (&rest rest)
+  "An interactive function that accepts any arguments, does nothing, and returns nothing."
+  (interactive)
+  (values))
+
 (defun* get-closest-pathname (file &optional (max-level 3))
   (let* ((root (expand-file-name "/"))
          (level 0)
          (dir (loop
                for d = default-directory then (expand-file-name ".." d)
-                 do (setq level (+ level 1))
+               do (setq level (+ level 1))
                if (file-exists-p (expand-file-name file d))
-                 return d
+               return d
                if (> level max-level)
-                 return nil
+               return nil
                if (equal d root)
-                 return nil)))
+               return nil)))
     (if dir
         (expand-file-name file dir)
       nil)))
@@ -51,5 +56,19 @@
        "%s: Can't touch this!"
      "%s is up for grabs.")
    (current-buffer)))
+
+(defun my-yank-sexp (&optional arg)
+  (interactive "p")
+  (let ((opoint (point)))
+    (forward-sexp (or arg 1))
+    (copy-region-as-kill opoint (point))))
+
+(defun my-layout-save (&optional register)
+  (interactive)
+  (frameset-to-register (or register ?1)))
+
+(defun my-layout-load (&optional register)
+  (interactive)
+  (jump-to-register (or register ?1) t))
 
 (provide 'my-lib)

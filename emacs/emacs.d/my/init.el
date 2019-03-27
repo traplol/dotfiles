@@ -1,16 +1,19 @@
+;; my-lib
+(load (expand-file-name "~/.emacs.d/my/my-lib"))
+(require 'my-lib)
 ;; Sets environment variables from shell
 (require 'exec-path-from-shell)
 (exec-path-from-shell-initialize)
 
 ;; store backup and autosave files in /tmp directory
-(setq backup-directory-alist `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
-(setq create-lockfiles nil)
+(setq backup-directory-alist         `((".*" . ,temporary-file-directory))
+      auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
+      create-lockfiles               nil)
 
 ;; Disable the toolbar in gui-mode
 (tool-bar-mode -1)
 ;; Disable the menubar
-(menu-bar-mode -99)
+(menu-bar-mode -1)
 ;; Line/column mode
 (setq column-number-mode t)
 ;; Disable backup files (*~ files)
@@ -23,16 +26,16 @@
 (require 'evil)
 (evil-mode 1)
 
+
 (require 'company)
 
 ;; IDO
 (require 'ido)
-(let ()
-  (setq ido-enable-flex-matching t)
-  (setq ido-everywhere t)
-  (setq ido-use-filename-at-point 'guess)
-  (setq ido-create-new-buffer 'always)
-  (ido-mode 1))
+(setq ido-enable-flex-matching  t
+      ido-everywhere            t
+      ido-use-filename-at-point 'guess
+      ido-create-new-buffer     'always)
+(ido-mode 1)
 
 ;; Flymake Cursor
 (eval-after-load 'flymake '(require 'flymake-cursor))
@@ -42,7 +45,7 @@
 ;; Font stuff
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8)
-(set-default-font "DejaVu Sans Mono 10")
+;(set-default-font "DejaVu Sans Mono 10")
 ;(require 'unicode-fonts)
 ;(unicode-fonts-setup)
 
@@ -61,7 +64,7 @@
 (my-packman-install-my-packages)
 
 ;; f5 to compile.
-(load (expand-file-name "~/.emacs.d/my/my-compile"))
+;;(load (expand-file-name "~/.emacs.d/my/my-compile"))
 
 ;; auto-complete
 (require 'auto-complete)
@@ -71,12 +74,11 @@
 (ac-config-default)
 
 ;; yasnippet
-(require 'yasnippet)
-(yas-global-mode 1)
-
+;(require 'yasnippet)
+;(yas-global-mode 1)
 
 ;; autopair
-(require 'autopair)
+;(require 'autopair)
 ;(autopair-global-mode 1)
 ;(setq autopair-autowrap t)
 
@@ -98,15 +100,15 @@
 (load (expand-file-name "~/.emacs.d/my/my-ocaml-mode-config"))
 
 ;; irony-mode
-;(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+;;(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
 (defun my-irony-mode-hook ()
   (define-key irony-mode-map [remap completion-at-point]
 	'irony-completion-at-point-async)
   (define-key irony-mode-map [remap complete-symbol]
 	'irony-completion-at-point-async))
-;(add-hook 'irony-mode-hook 'my-irony-mode-hook) ;
-;(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+;;(add-hook 'irony-mode-hook 'my-irony-mode-hook) ;
+;;(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
 (defun my-go-mode-hook ()
   (setq tab-width 4)
@@ -146,50 +148,56 @@
 
 ;; Haskell mode
 (require 'haskell-mode)
-;(add-to-list 'auto-mode-alist '("\\.hs\\'" . haskell-mode))
-;(eval-after-load 'flycheck '(add-hook 'flycheck-mode-hook 'flycheck-haskell-setup))
-;(add-hook 'haskell-mode-hook 'flycheck-mode-hook)
+;;(add-to-list 'auto-mode-alist '("\\.hs\\'" . haskell-mode))
+;;(eval-after-load 'flycheck '(add-hook 'flycheck-mode-hook 'flycheck-haskell-setup))
+;;(add-hook 'haskell-mode-hook 'flycheck-mode-hook)
 (require 'flymake-haskell-multi)
 (add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
 
-(require 'omnisharp)
-(require 'csharp-mode)
-(eval-after-load 'company '(add-to-list 'company-backends 'company-omnisharp))
-(defun my-csharp-mode-setup ()
-  (omnisharp-mode)
-  (company-mode)
-  (flycheck-mode)
+;; (require 'omnisharp)
+;; (require 'csharp-mode)
+;; (eval-after-load 'company '(add-to-list 'company-backends 'company-omnisharp))
+;; (defun my-csharp-mode-setup ()
+;;   (omnisharp-mode)
+;;   (company-mode)
+;;   (flycheck-mode)
 
-  (setq indent-tabs-mode nil)
-  (setq c-syntactic-indentation t)
-  (c-set-style "ellemtel")
-  (setq c-basic-offset 4)
-  (setq truncate-lines t)
-  (setq tab-width 4)
-  (setq evil-shift-width 4)
-  (electric-pair-local-mode 1)
-  (set (make-local-variable 'compile-command) "dotnet build")
-  (local-set-key (kbd "C-c C-c") 'recompile)
-  (local-set-key (kbd "<f5>") 'recompile))
-(add-hook 'csharp-mode-hook 'my-csharp-mode-setup t)
+;;   (setq indent-tabs-mode nil)
+;;   (setq c-syntactic-indentation t)
+;;   (c-set-style "ellemtel")
+;;   (setq c-basic-offset 4)
+;;   (setq truncate-lines t)
+;;   (setq tab-width 4)
+;;   (setq evil-shift-width 4)
+;;   (electric-pair-local-mode 1)
+;;   (set (make-local-variable 'compile-command) "dotnet build")
+;;   (local-set-key (kbd "C-c C-c") 'recompile)
+;;   (local-set-key (kbd "<f5>") 'recompile))
+;; (add-hook 'csharp-mode-hook 'my-csharp-mode-setup t)
 
-(setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "google-chrome")
+
+(require 'eww)
+(defun my-eww-browse-url (url &optional new-window)
+  (when new-window
+    (pop-to-buffer
+     (generate-new-buffer (format "*eww-%s*" (url-host (url-generic-parse-url
+                                                        (eww--dwim-expand-url url))))))
+    (eww-mode))
+  (eww url)
+  (let ((title (plist-get eww-data :title)))
+    (when title
+      (rename-buffer (format "*eww : %s *" title) t))))
+(setq browse-url-browser-function 'my-eww-browse-url
+      browse-url-new-window-flag t)
+
 
 ;; Experimenting with transparency
 (set-frame-parameter (selected-frame) 'alpha '(98 98))
-(require 'neotree)
-(evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
-(evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
-(evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
-(evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
-(evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
-(evil-define-key 'normal neotree-mode-map (kbd "n") 'neotree-next-line)
-(evil-define-key 'normal neotree-mode-map (kbd "p") 'neotree-previous-line)
-(evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
-(evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
 
 ;; My Keyboard shortcut overrides
 (load (expand-file-name "~/.emacs.d/my/my-keyboard-overrides"))
+
+(load (expand-file-name "~/.emacs.d/my/project-time"))
+(project-time-mode 1)
 
 (find-file (expand-file-name "~/.notes/general.org"))

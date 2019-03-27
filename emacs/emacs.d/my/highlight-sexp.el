@@ -37,14 +37,21 @@
   nil
   "The current overlay.")
 
+;; default=#333333
+(defcustom hl-sexp-background-copy-highlighted-color
+  "#2a2a2a"
+  "*The color used by HL-SEXP-COPY-HIGHLIGHTED to 'blink' the region copied."
+  :type 'color
+  :group 'highlight-sexp)
+
 ;; default=#555555
-;"#2e3436"
 (defcustom hl-sexp-background-color
   "#3a3a3a"
   "*The color used for the background of the highlighted sexp."
   :type 'color
   :group 'highlight-sexp)
 
+;; default=#2e3436
 (defcustom hl-sexp-foreground-color
   nil
   "*The color used for the foreground of the highlighted sexp"
@@ -57,6 +64,8 @@
   "*The color used for the background of the highlighted sexp."
   :type 'color
   :group 'highlight-sexp)
+
+
 
 (make-face 'hl-sexp-face)
 (defcustom hl-sexp-face
@@ -93,10 +102,50 @@
   (lambda ()
     (highlight-sexp-mode t)))
 
+
+(defun hl-sexp--set-background (color)
+  (let ((attribute (face-attr-construct 'hl-sexp-face)))
+    (setq attribute (plist-put attribute :background color))
+    (overlay-put hl-sexp-overlay 'face attribute)))
+
+(defun hl-sexp--reset-background ()
+  (hl-sexp--set-background hl-sexp-background-color))
+
 (defun hl-sexp-delete-overlay ()
   (if hl-sexp-overlay
       (delete-overlay hl-sexp-overlay))
   (setq hl-sexp-overlay nil))
+
+(defun hl-sexp-get-kill-region ()
+  (save-excursion
+    (ignore-errors
+      (let* ((sppss (syntax-ppss))
+             (start (elt sppss 1))
+             (inside-a-string? (elt sppss 3))
+             (inside-a-comment? (elt sppss 4))
+             (end (and start
+                       (not inside-a-string?)
+                       (not inside-a-string?)
+                       (scan-sexps start 1))))
+        (list start end)))))
+
+(defun hl-sexp-copy-highlighted ()
+  "Save the highlighted region as-if killed but don't kill it."
+  (interactive)
+  (destructuring-bind (start end) (hl-sexp-get-kill-region)
+    (when (and start end)
+      (copy-region-as-kill start end)
+      (hl-sexp--set-background hl-sexp-background-copy-highlighted-color)
+      (message "Copied %s characters." (- end start))
+      (run-at-time "0.1 sec" nil 'hl-sexp--reset-background))))
+
+
+(defun hl-sexp-kill-highlighted ()
+  "Save the highlighted region and kill it."
+  (interactive)
+  (destructuring-bind (start end) (hl-sexp-get-kill-region)
+    (when (and start end)
+      (kill-region start end))))
 
 (defun hl-sexp-highlight ()
   (let ((text-property (get-text-property (point) 'face)))
@@ -127,12 +176,9 @@
 
 (defun hl-sexp-create-overlay ()
   (let ((attribute (face-attr-construct 'hl-sexp-face)))
-    (if hl-sexp-foreground-color
-        (setq attribute (plist-put attribute :foreground hl-sexp-foreground-color)))
-    (if hl-sexp-background-color
-        (setq attribute (plist-put attribute :background hl-sexp-background-color)))
-    (if hl-sexp-underline-color
-        (setq attribute (plist-put attribute :underline hl-sexp-underline-color)))
+    (if hl-sexp-foreground-color (setq attribute (plist-put attribute :foreground hl-sexp-foreground-color)))
+    (if hl-sexp-background-color (setq attribute (plist-put attribute :background hl-sexp-background-color)))
+    (if hl-sexp-underline-color  (setq attribute (plist-put attribute :underline hl-sexp-underline-color)))
     (set (make-local-variable 'hl-sexp-overlay) (make-overlay 0 0))
     (overlay-put hl-sexp-overlay 'face attribute)))
 
