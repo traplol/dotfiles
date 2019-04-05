@@ -3,9 +3,12 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod1
+#for_window [class=".*"] border normal 2    # use 'normal' to get class names
 for_window [class=".*"] border pixel 2
 for_window [class="qemu"] floating enable
 for_window [class="my-gbc"] floating enable
+for_window [class="game"] floating enable
+#for_window [class=".*VirtualBox.*"] floating enable
 
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -16,8 +19,8 @@ font pango:Droid Sans Mono Dotted for Powerline 8
 floating_modifier $mod
 
 # start a terminal
-#bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec gnome-terminal
+bindsym $mod+Return exec i3-sensible-terminal
+#bindsym $mod+Return exec gnome-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -106,29 +109,34 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+    # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym h resize shrink width 2 px or 2 ppt
-        bindsym j resize shrink height 2 px or 2 ppt
-        bindsym k resize grow height 2 px or 2 ppt
-        bindsym l resize grow width 2 px or 2 ppt
+    # Pressing left will shrink the window’s width.
+    # Pressing right will grow the window’s width.
+    # Pressing up will shrink the window’s height.
+    # Pressing down will grow the window’s height.
+    bindsym h resize shrink width 2 px or 2 ppt
+    bindsym j resize shrink height 2 px or 2 ppt
+    bindsym k resize grow height 2 px or 2 ppt
+    bindsym l resize grow width 2 px or 2 ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 2 px or 2 ppt
-        bindsym Down resize grow height 2 px or 2 ppt
-        bindsym Up resize shrink height 2 px or 2 ppt
-        bindsym Right resize grow width 2 px or 2 ppt
+    # same bindings, but for the arrow keys
+    bindsym Left resize shrink width 2 px or 2 ppt
+    bindsym Down resize grow height 2 px or 2 ppt
+    bindsym Up resize shrink height 2 px or 2 ppt
+    bindsym Right resize grow width 2 px or 2 ppt
 
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 
 bindsym $mod+r mode "resize"
+
+mode "gamemode" {
+    bindsym Mod4+Shift+g mode "default"
+}
+bindsym Mod4+Shift+g mode "gamemode"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -136,9 +144,15 @@ bar {
     position bottom
     tray_output HDMI-0
     output HDMI-0
-    font pango:Droid Sans Mono Dotted for Powerline, pango:FontAwesome 12
+    #font pango:Anonymice Powerline, pango:FontAwesome 12
+    #font pango:DejaVu Sans Mono for Powerline, pango:FontAwesome 12
+    #font pango:Droid Sans Mono for Powerline, pango:FontAwesome 12
+    #font pango:Droid Sans Mono Dotted for Powerline, pango:FontAwesome 12
+    font pango:Droid Sans Mono Slashed for Powerline, pango:FontAwesome 12
+    #font pango:Inconsolata for Powerline, pango:FontAwesome 15
+    #font pango:Noto Mono for Powerline, pango:FontAwesome 12
+    #font pango:Terminess Powerline, pango:FontAwesome 12
     status_command i3blocks -c /home/max/.i3/blocks-right
-    height 18
     colors {
         background #021215
         statusline #93a1a1
@@ -155,9 +169,8 @@ bar {
     position bottom
     tray_output DVI-D-0
     output DVI-D-0
-    font pango:Droid Sans Mono Dotted for Powerline, pango:FontAwesome 10
+    font pango:Droid Sans Mono Dotted for Powerline, pango:FontAwesome 8
     status_command i3blocks -c /home/max/.i3/blocks-left
-    height 17
     colors {
         background #021215
         statusline #93a1a1
@@ -218,13 +231,13 @@ bindsym Mod4+d exec rofi -show window
 # Colors
 ########################
 # class                 border  backgr. text    indicator child_border
-client.focused          #4c7899 #338fcc #002b36 #2e9ef4   #285577
-client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+client.focused          #4ca8a9 #33afcc #002b36 #2a9ef4   #20a0a0
+client.focused_inactive #333333 #5f676a #ffffff #484e50   #333333
 client.unfocused        #333333 #222222 #888888 #292d2e   #222222
 client.urgent           #2f343a #900000 #ffffff #900000   #900000
 client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 
-client.background       #fffff
+client.background       #ffffff
 
 # Desktop background
 exec "/home/max/.backgrounds/background.sh"
@@ -232,4 +245,6 @@ exec "/home/max/.backgrounds/background.sh"
 exec "/home/max/.i3/trans.sh"
 # Fix screen tearing
 exec "/etc/X11/fix-screen-tearing.sh"
-
+# Keyboard repeat rate
+exec "xset r rate 250 110"
+bindsym Mod4+m exec "xset r rate 250 110"
