@@ -144,11 +144,12 @@ bar {
     position bottom
     tray_output HDMI-0
     output HDMI-0
+    font pango:Hack, pango:FontAwesome 10
     #font pango:Anonymice Powerline, pango:FontAwesome 12
     #font pango:DejaVu Sans Mono for Powerline, pango:FontAwesome 12
     #font pango:Droid Sans Mono for Powerline, pango:FontAwesome 12
     #font pango:Droid Sans Mono Dotted for Powerline, pango:FontAwesome 12
-    font pango:Droid Sans Mono Slashed for Powerline, pango:FontAwesome 12
+    #font pango:Droid Sans Mono Slashed for Powerline, pango:FontAwesome 12
     #font pango:Inconsolata for Powerline, pango:FontAwesome 15
     #font pango:Noto Mono for Powerline, pango:FontAwesome 12
     #font pango:Terminess Powerline, pango:FontAwesome 12
@@ -169,7 +170,7 @@ bar {
     position bottom
     tray_output DVI-D-0
     output DVI-D-0
-    font pango:Droid Sans Mono Dotted for Powerline, pango:FontAwesome 8
+    font pango:Hack, pango:FontAwesome 8
     status_command i3blocks -c /home/max/.i3/blocks-left
     colors {
         background #021215

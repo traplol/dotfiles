@@ -1,8 +1,6 @@
 #!/usr/bin/python3
-import sys, os, random
-#call('echo "{}" | xclip -sel clip'.format(str(sys.argv)))
-out = random.random()#str(sys.argv).replace('"', '\\"')
-os.system('echo "{}" | xclip -sel clip'.format(out))
+import sys
+out = str(sys.argv).replace('"', '\\"')
 print(out)
 print(out)
 

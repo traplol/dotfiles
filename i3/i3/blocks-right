@@ -24,33 +24,35 @@ X=#021215
 Y=#002b36
 Z=#AAAAAA
 
+
 [radioinfo]
-interval=20
-command=~/.i3/powerline $A $B $C "$(radio info --i3)" --no-left-bg
+interval=3
+command=~/.i3/powerline $B "#F0EAD6" "#111111" "$(radio "$BLOCK_BUTTON" --i3)" # --rainbow-text
 
 [project-time]
-interval=60
-command=~/.i3/powerline $X $Y $Z "$(racket ~/.i3/project-time-blocklet.rkt)"
+interval=20
+command=~/.i3/powerline "#F0EAD6" $Y $Z "$(racket ~/.i3/project-time-blocklet.rkt)" --pad-both
 
 [volume]
-interval=5
-command=~/.i3/powerline $A $B $C "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)"
+interval=once
+signal=1
+command=~/.i3/powerline $A $B $C "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)" --pad-both
 
 [disk]
 interval=15
-command=~/.i3/powerline $X $Y $Z "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)"
+command=~/.i3/powerline $X $Y $Z "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)" --pad-both
 
 [memory]
 interval=5
-command=~/.i3/powerline $A $B $C "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)"
+command=~/.i3/powerline $A $B $C "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)" --pad-both
 
 [cpu_usage]
 interval=1
-command=~/.i3/powerline $X $Y $Z "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)"
+command=~/.i3/powerline $X $Y $Z "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)" --pad-both
 
 [iface]
 interval=5
-command=~/.i3/powerline $A $B "#00FF00" "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)"
+command=~/.i3/powerline $A $B "#00FF00" "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)" --pad-left
 
 [pi-stat]
 interval=20
@@ -66,7 +68,7 @@ command=~/.i3/powerline $A $B $C "$(~/.i3/server-stat.sh 8.8.8.8 "I" "I")" --no-
 
 [bandwidth]
 interval=3
-command=~/.i3/powerline $X $Y $Z "$(~/.i3/$BLOCK_NAME)"
+command=~/.i3/powerline $X $Y $Z "$(~/.i3/$BLOCK_NAME)" --pad-both
 
 [today]
 interval=60
