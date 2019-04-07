@@ -1,34 +1,30 @@
 /*
+ *
+ * Copyright 2019 Max Mickey (traplol)
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy 
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
+ * of the Software, and to permit persons to whom the Software is furnished to 
+ * do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS 
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR 
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER 
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ *
  * $ clang++-7 powerline.cpp -std=c++17 -O3 -Wall -o powerline
  *
- * usage:
- * ./powerline "#FFFFFF" "#000000" "#AAAAAA" "some text to wrap" [flags]
+ * See the `usage` procedure.
  *
- * --no-arrow                  doesn't print the powerline arrow
- * --no-left-bg                doesn't set background for arrow
- * --no-left-fg                doesn't set foreground for arrow
- * --no-right-bg               doesn't set background for text
- * --no-right-fg               doesn't set foreground for text
- * --pad-left     -l           adds 1 space left of text
- * --pad-right    -r           adds 1 space right of text
- * --pad-both     -b           adds 1 space to both left AND right of text
- * --rainbow-text              randomizes the foreground of each character in text 
- *                             (supports valid single codepoint utf-8)
- * 
- * Notes:
- *   If less than four arguments are provided nothing will be printed
- * 
- *   If the input text is exactly 3 lines and the third line exactly matches ^#[a-fA-F0-9]{6}$
- *   then the third input line will be used in place of the text's foreground color
- *
- *   If input text happens to be empty there will still be an "empty" segment printed
- *
- * Example:
- * $ ./powerline "#002b36" "#338fcc" "#111111" " $(date '+%T') "
- * <span background="#002b36"  foreground="#338fcc"></span><span background="#338fcc"  foreground="#111111"> 11:08:43 </span>
-
  */
-
 
 #include <string>
 #include <cstring>
@@ -122,8 +118,51 @@ void rainbowize(std::string &output, const std::string &text, const std::string 
     }
 }
 
+void usage() {
+    puts("usage:");
+    puts("    ./powerline \"#AAAAAA\" \"#BBBBBB\" \"#CCCCCC\" \"some text to wrap\" [flags]");
+    puts("    \"#AAAAAA\" - Required: the background color of the ''");
+    puts("    \"#BBBBBB\" - Required: the foreground color of the '' AND the background color of the input text");
+    puts("    \"#CCCCCC\" - Required: the foreground color of the input text");
+    puts("    \"some text to wrap\" - Required: the input text to wrap");
+    puts("");
+    puts("    --help           -h           shows this message and exits");
+    puts("    --no-arrow                    doesn't print the powerline arrow");
+    puts("    --no-left-bg                  doesn't set background for arrow");
+    puts("    --no-left-fg                  doesn't set foreground for arrow");
+    puts("    --no-right-bg                 doesn't set background for text");
+    puts("    --no-right-fg                 doesn't set foreground for text");
+    puts("    --pad-left       -l           adds 1 space left of text");
+    puts("    --pad-right      -r           adds 1 space right of text");
+    puts("    --pad-both       -b           adds 1 space to both left AND right of text");
+    puts("    --rainbow-text                randomizes the foreground of each character in text");
+    puts("                                  (supports valid single codepoint utf-8)");
+    puts("    --font <font-name>            adds a font=\"<font-name>\" attribute to the text span");
+    puts("");
+    puts("Notes:");
+    puts("  * If less than four arguments are provided nothing will be printed");
+    puts("");
+    puts("  * Only the first line of the input text is used for output.");
+    puts("");
+    puts("  * If the input text is exactly 3 lines and the third line exactly matches ^#[a-fA-F0-9]{6}$");
+    puts("    then the third input line will be used in place of the text's foreground color");
+    puts("");
+    puts("  * If input text happens to be empty there will still be an \"empty\" segment printed");
+    puts("");
+    puts("Example:");
+    puts("    $ ./powerline \"#002b36\" \"#338fcc\" \"#111111\" \" $(date '+%T') \"");
+    puts("<span background=\"#002b36\" foreground=\"#338fcc\"></span><span background=\"#338fcc\" foreground=\"#111111\"> 11:08:43 </span>");
+    exit(0);
+}
+
 int main(int argc, char **argv) {
     --argc; ++argv;
+    for (int i = 0; i < argc; ++i) {
+        const char *p = argv[i];
+        if (arg_match("-h", p) || arg_match("--help", p)) {
+            usage();
+        }
+    }
     if (argc < 4) {
         exit(0);
     }
@@ -136,7 +175,7 @@ int main(int argc, char **argv) {
     std::vector<std::string> lines;
     split(argv[3], '\n', std::back_inserter(lines));
     
-    std::string text("");
+    std::string text;
     if (lines.size() != 0) {
         text = lines[0];
     }
@@ -165,6 +204,7 @@ int main(int argc, char **argv) {
     bool pad_left = false;
     bool pad_right = false;
     bool rainbow_text = false;
+    std::string font;
 
     for (int i = 3; i < argc; ++i) {
         const char *p = argv[i];
@@ -196,34 +236,47 @@ int main(int argc, char **argv) {
         else if (arg_match("--rainbow-text", p)) {
             rainbow_text = true;
         }
+        else if (arg_match("--font", p)) {
+            if (i + 1 < argc) {
+                ++i;
+                font = argv[i];
+            }
+            else {
+                puts("--font flag given but no font provided!");
+                exit(-1);
+            }
+        }
     }
     
     std::string output;
     if (!no_arrow) {
-        output.append("<span ");
+        output.append("<span");
         if (!no_left_bg) {
-            output.append("background=\"");
+            output.append(" background=\"");
             output.append(color_a);
-            output.append("\" ");
+            output.append("\"");
         }
-        output.append(" ");
         if (!no_left_fg) {
-            output.append("foreground=\"");
+            output.append(" foreground=\"");
             output.append(color_b);
             output.append("\"");
         }
         output.append("></span>");
     }
-    output.append("<span ");
+    output.append("<span");
     if (!no_right_bg) {
-        output.append("background=\"");
+        output.append(" background=\"");
         output.append(color_b);
-        output.append("\" ");
+        output.append("\"");
     }
-    output.append(" ");
     if (!no_right_fg) {
-        output.append("foreground=\"");
+        output.append(" foreground=\"");
         output.append(text_color);
+        output.append("\"");
+    }
+    if (font.size() != 0) {
+        output.append(" font=\"");
+        output.append(font);
         output.append("\"");
     }
     output.append(">");
