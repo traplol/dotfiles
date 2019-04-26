@@ -26,8 +26,8 @@ Z=#AAAAAA
 
 
 [radioinfo]
-interval=3
-command=~/.i3/powerline $B "#F0EAD6" "#111111" "$(radio "$BLOCK_BUTTON" --i3)" # --rainbow-text
+interval=1
+command=~/.i3/powerline $B "#F0EAD6" "#111111" "$(radio "$BLOCK_BUTTON" --i3)" --font "Terminess Powerline"
 
 [project-time]
 interval=20
@@ -55,16 +55,16 @@ interval=5
 command=~/.i3/powerline $A $B "#00FF00" "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)" --pad-left
 
 [pi-stat]
-interval=20
+interval=5
 command=~/.i3/powerline $A $B $C "$(~/.i3/server-stat.sh 192.168.1.142 " P" " P")" --no-arrow
 
 [server-stat]
-interval=20
+interval=5
 command=~/.i3/powerline $A $B $C "$(~/.i3/server-stat.sh 192.168.1.10 "S" "S")" --no-arrow
 
 [inet-stat]
-interval=20
-command=~/.i3/powerline $A $B $C "$(~/.i3/server-stat.sh 8.8.8.8 "I" "I")" --no-arrow
+interval=5
+command=~/.i3/powerline $A $B $C "$(~/.i3/server-stat.sh 8.8.8.8 "I " "I ")" --no-arrow
 
 [bandwidth]
 interval=3
@@ -76,5 +76,5 @@ command=~/.i3/powerline $A $B $C " $(date '+%a %b %d') "
 
 [now]
 interval=1
-command=~/.i3/powerline $X "#338fcc" "#111111" " $(date '+%T') "
+command=~/.i3/powerline $X "#338fcc" "#111111" " $(date '+%T') " --font "DejaVu Sans Mono"
 

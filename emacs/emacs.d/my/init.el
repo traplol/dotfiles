@@ -1,6 +1,10 @@
 ;; my-lib
 (load (expand-file-name "~/.emacs.d/my/my-lib"))
 (require 'my-lib)
+(load (expand-file-name "~/.emacs.d/my/my-i3-manip"))
+(require 'my-i3-manip)
+(load (expand-file-name "~/.emacs.d/my/my-media"))
+(require 'my-media)
 ;; Sets environment variables from shell
 (require 'exec-path-from-shell)
 (exec-path-from-shell-initialize)
@@ -31,9 +35,11 @@
 
 ;; IDO
 (require 'ido)
-(setq ido-enable-flex-matching  t
+(setq ffap-machine-p-known 'reject
+      ffap-machine-p-unknown 'reject
+      ido-enable-flex-matching  t
       ido-everywhere            t
-      ido-use-filename-at-point 'guess
+      ido-use-filename-at-point 'nil
       ido-create-new-buffer     'always)
 (ido-mode 1)
 
@@ -42,12 +48,18 @@
 (custom-set-variables
  '(help-at-pt-timer-delay 0.9)
  '(help-at-pt-display-when-idle '(flymake-overlay)))
+
 ;; Font stuff
-(set-language-environment "UTF-8")
-(set-default-coding-systems 'utf-8)
-;(set-default-font "DejaVu Sans Mono 10")
-;(require 'unicode-fonts)
-;(unicode-fonts-setup)
+(progn
+  (set-language-environment "UTF-8")
+  (set-default-coding-systems 'utf-8)
+  (let ((font-to-use "Hack 9"))
+    (add-to-list 'default-frame-alist (cons 'font font-to-use))
+    (set-face-attribute 'default t :font font-to-use))
+  (require 'unicode-fonts)
+  ;; comment this line out if startup times start taking too long
+  ;;(unicode-fonts-setup)
+  )
 
 (require 'ansi-color)
 (defun colorize-compilation-buffer ()
@@ -73,15 +85,6 @@
 (require 'auto-complete-config)
 (ac-config-default)
 
-;; yasnippet
-;(require 'yasnippet)
-;(yas-global-mode 1)
-
-;; autopair
-;(require 'autopair)
-;(autopair-global-mode 1)
-;(setq autopair-autowrap t)
-
 ;; My c and cpp mode options!
 (load (expand-file-name "~/.emacs.d/my/my-c-and-c++-mode-options"))
 ;; My lisp mode options
@@ -97,7 +100,7 @@
 (add-to-list 'auto-mode-alist '("\\.ma\\'" . mal-mode))
 
 ;; OCaml config
-(load (expand-file-name "~/.emacs.d/my/my-ocaml-mode-config"))
+;;(load (expand-file-name "~/.emacs.d/my/my-ocaml-mode-config"))
 
 ;; irony-mode
 ;;(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
@@ -148,33 +151,8 @@
 
 ;; Haskell mode
 (require 'haskell-mode)
-;;(add-to-list 'auto-mode-alist '("\\.hs\\'" . haskell-mode))
-;;(eval-after-load 'flycheck '(add-hook 'flycheck-mode-hook 'flycheck-haskell-setup))
-;;(add-hook 'haskell-mode-hook 'flycheck-mode-hook)
 (require 'flymake-haskell-multi)
 (add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
-
-;; (require 'omnisharp)
-;; (require 'csharp-mode)
-;; (eval-after-load 'company '(add-to-list 'company-backends 'company-omnisharp))
-;; (defun my-csharp-mode-setup ()
-;;   (omnisharp-mode)
-;;   (company-mode)
-;;   (flycheck-mode)
-
-;;   (setq indent-tabs-mode nil)
-;;   (setq c-syntactic-indentation t)
-;;   (c-set-style "ellemtel")
-;;   (setq c-basic-offset 4)
-;;   (setq truncate-lines t)
-;;   (setq tab-width 4)
-;;   (setq evil-shift-width 4)
-;;   (electric-pair-local-mode 1)
-;;   (set (make-local-variable 'compile-command) "dotnet build")
-;;   (local-set-key (kbd "C-c C-c") 'recompile)
-;;   (local-set-key (kbd "<f5>") 'recompile))
-;; (add-hook 'csharp-mode-hook 'my-csharp-mode-setup t)
-
 
 (require 'eww)
 (defun my-eww-browse-url (url &optional new-window)
@@ -197,7 +175,11 @@
 ;; My Keyboard shortcut overrides
 (load (expand-file-name "~/.emacs.d/my/my-keyboard-overrides"))
 
+;; My global minor-mode that keep track of time spent editing files and aggregates
+;; that time into tables
 (load (expand-file-name "~/.emacs.d/my/project-time"))
 (project-time-mode 1)
+
+(pdf-tools-install)
 
 (find-file (expand-file-name "~/.notes/general.org"))

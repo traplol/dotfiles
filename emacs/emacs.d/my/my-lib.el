@@ -71,4 +71,10 @@
   (interactive)
   (jump-to-register (or register ?1) t))
 
+(defun my-cd (&optional dir)
+  (interactive "DChange default directory: ")
+  (when (slime-connected-p)
+    (slime-cd dir))
+  (cd dir))
+
 (provide 'my-lib)

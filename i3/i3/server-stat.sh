@@ -18,7 +18,7 @@ else
     DOWN="DOWN"
 fi
 
-ping -c 1 -i .2 $TARGET &> /dev/null
+ping -c 1 -i .5 $TARGET &> /dev/null
 STATUS=$?
 
 if [ $STATUS -ne 0 ] ; then

@@ -67,3 +67,5 @@ handle-ctrl-d() {
 }
 zle -N handle-ctrl-d
 bindkey '^D' handle-ctrl-d
+
+alias e=emacsclient 

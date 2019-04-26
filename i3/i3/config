@@ -103,7 +103,7 @@ bindsym $mod+Shift+i scratchpad show
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r exec /home/max/.i3/restart.sh
+bindsym $mod+Shift+r exec "~/.i3/restart.sh"
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
@@ -224,6 +224,7 @@ bindsym $mod+End exec --no-startup-id "amixer -D pulse set Master toggle && pkil
 # Mod4 -> Windows key
 bindsym Mod4+e exec "emacsclient -c"
 bindsym Mod4+c exec "google-chrome"
+bindsym Mod4+f exec "firefox"
 bindsym Mod4+q exec "coding-layout.sh ~/workspace"
 bindsym $mod+d exec rofi -show run
 bindsym Mod4+d exec rofi -show window
@@ -240,12 +241,18 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 
 client.background       #ffffff
 
+# dunst notification daemon
+exec --no-startup-id dunst -config "~/.i3/dunstrc"
+
 # Desktop background
-exec "/home/max/.backgrounds/background.sh"
+exec "~/.backgrounds/background.sh"
+
 # Transparency
-exec "/home/max/.i3/trans.sh"
+exec "~/.i3/trans.sh"
+
 # Fix screen tearing
 exec "/etc/X11/fix-screen-tearing.sh"
+
 # Keyboard repeat rate
 exec "xset r rate 250 110"
 bindsym Mod4+m exec "xset r rate 250 110"

@@ -5,6 +5,7 @@
 (load (expand-file-name "~/.emacs.d/my/init.el"))
 
 
+
 ;; Custom menu stuff beyond this point.
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -16,12 +17,10 @@
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(custom-enabled-themes '(tango-dark))
- '(help-at-pt-display-when-idle '(flymake-overlay) nil (help-at-pt))
- '(help-at-pt-timer-delay 0.9)
  '(inhibit-startup-screen t)
  '(org-babel-load-languages '((python . t) (C . t) (emacs-lisp . t)))
  '(package-selected-packages
-   '(aggressive-indent centered-cursor-mode rainbow-mode company-irony-c-headers irony-eldoc neotree exec-path-from-shell rmsbolt racket-mode kotlin-mode vue-mode ensime scala-mode php-mode d-mode flymake-cursor flymake-haskell-multi markdown-mode flycheck-haskell haskell-mode unicode-fonts ruby-end rainbow-delimiters racer paredit magit go-mode flycheck-rust flycheck-irony evil-numbers evil company-irony bison-mode autopair auto-complete)))
+   '(pdf-tools aggressive-indent centered-cursor-mode rainbow-mode company-irony-c-headers irony-eldoc neotree exec-path-from-shell rmsbolt racket-mode kotlin-mode vue-mode ensime scala-mode php-mode d-mode flymake-cursor flymake-haskell-multi markdown-mode flycheck-haskell haskell-mode unicode-fonts ruby-end rainbow-delimiters racer paredit magit go-mode flycheck-rust flycheck-irony evil-numbers evil company-irony bison-mode autopair auto-complete)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
