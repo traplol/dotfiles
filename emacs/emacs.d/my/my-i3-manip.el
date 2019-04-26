@@ -58,7 +58,8 @@ This is useful for using a specific json object with a series of commands withou
     (substring response 14)))
 
 (defun i3--ipc-command (message)
-  (i3--ipc-parse (i3--ipc-raw (i3--format-ipc +i3-ipc-run-command+ message))))
+  (when (/= 0 (length message))
+    (i3--ipc-parse (i3--ipc-raw (i3--format-ipc +i3-ipc-run-command+ message)))))
 
 (defun i3--ipc-get-tree ()
   (i3--ipc-parse (i3--ipc-raw (i3--format-ipc +i3-ipc-get-tree+))))
@@ -108,7 +109,7 @@ This is useful for using a specific json object with a series of commands withou
                      (when found (return found))))))))
 
 (defun i3-filter (hash-predicate thing)
-  "Recursively traverses THING for HASH-TABLEs that HASH-PREDICATE returns non-nil for."
+  "Recursively traverses and collects THING for HASH-TABLEs that HASH-PREDICATE returns non-nil for."
   (let ((results))
     (typecase thing
       (list
@@ -129,11 +130,12 @@ This is useful for using a specific json object with a series of commands withou
 
 Objects are converted to HASH-TABLEs where the keys are STRINGs.
 Arrays are converted to LISTs."
-  (let* ((json-object-type 'hash-table)
-         (json-array-type 'list)
-         (json-key-type 'string)
-         (json (json-read-from-string string)))
-    json))
+  (when string
+    (let* ((json-object-type 'hash-table)
+           (json-array-type 'list)
+           (json-key-type 'string)
+           (json (json-read-from-string string)))
+      json)))
 
 (defun i3-get-tree ()
   "Gets the i3 data tree and parses it into lisp objects."
@@ -152,15 +154,15 @@ If `*I3-THING*' is nil then the result of calling `I3-GET-TREE' will be used ins
 has been exceeded. WINDOW-TITLE may be a regular expression. 
 
 The default value for TIMEOUT is 10 (seconds)"
-  (or timeout (setq timeout 10))
-  (let ((timedout nil))
-    (run-at-time (+ timeout (float-time)) nil (lambda (&rest args) (setq timedout t)))
-    ;; if *i3-thing* is non-nil before calling this function then i3-find-window would
-    ;; always timeout unless they window was already opened. So here we explicitly set
-    ;; it to nil so i3-get-tree is always called.
-    (let ((*i3-thing* nil))
+  (unless timeout
+    (setq timeout 10))
+  ;; if *i3-thing* is non-nil before calling this function then i3-find-window would
+  ;; always timeout unless they window was already opened. So here we explicitly set
+  ;; it to nil so i3-get-tree is always called.
+  (let ((*i3-thing* nil))
+    (with-timeout (timeout nil)
       (loop for thing = (i3-find-window window-title)
-            until (or timedout thing)
+            until thing
             do (sleep-for 0.1)
             finally (return thing)))))
 
@@ -173,9 +175,20 @@ The default value for TIMEOUT is 10 (seconds)"
   (i3-filter #'i3-window-p thing))
 
 (defun i3-format-command (type id command-string &rest args)
+  "Formats a command string.
+TYPE should be either a STRING or a SYMBOL representing the identifier type.
+
+ID represents the identifier to use, or if ID is a HASH-TABLE then the window's
+id will be used and TYPE will be ignored.
+
+COMMAND-STRING and ARGS is a format specifier to be applied with `FORMAT'"
   ;; 'class', 'instance', 'window_role', 'con_id', 'id', 'window_type',
   ;; 'con_mark', 'title', 'urgent', 'workspace', 'tiling', 'floating',
   ;; ']'
+  (when (hash-table-p id)
+    (setq id (i3-get-id id))
+    (unless id (error "Unable to extract id from hashtable"))
+    (setq type 'id))
   (let ((command (apply #'format command-string args))
         (type-str (or
                    (and (stringp type) type)
@@ -196,20 +209,20 @@ The default value for TIMEOUT is 10 (seconds)"
     (format "[%s=\"%s\"] %s" type-str id command)))
 
 (defun i3-cmd-focus (id &optional type)
-  (i3-format-command (or type 'con-id) id "focus"))
+  (i3-format-command (or type 'id) id "focus"))
 
 (defun i3-cmd-set-pos (id x y &optional type)
-  (i3-format-command (or type 'con-id) id "move position %dpx %dpx" x y))
+  (i3-format-command (or type 'id) id "move position %dpx %dpx" x y))
 
 (defun i3-cmd-floating (id mode &optional type)
-  (i3-format-command (or type 'con-id) id
-                      "floating %s"
-                      (cond ((eq 'toggle mode) "toggle")
-                            (mode "enable")
-                            (t "disable"))))
+  (i3-format-command (or type 'id) id
+                     "floating %s"
+                     (cond ((eq 'toggle mode) "toggle")
+                           (mode "enable")
+                           (t "disable"))))
 
 (defun i3-cmd-set-size (id x y &optional type)
-  (i3-format-command (or type 'con-id) id "resize set %dpx %dpx" x y))
+  (i3-format-command (or type 'id) id "resize set %dpx %dpx" x y))
 
 
 (defun i3-focused-window ()
@@ -224,22 +237,29 @@ The default value for TIMEOUT is 10 (seconds)"
 (defun i3-get-dimensions (table)
   (let ((rect (gethash "rect" table)))
     (when rect
-      (list (gethash "x" rect) (gethash "y" rect)
-            (gethash "width" rect) (gethash "height" rect)))))
+      (list (gethash "x" rect)
+            (gethash "y" rect)
+            (gethash "width" rect)
+            (gethash "height" rect)))))
 
 (defun i3-get-pos (table)
   (let ((rect (gethash "rect" table)))
     (when rect
-      (list (gethash "x" rect) (gethash "y" rect)))))
+      (list (gethash "x" rect)
+            (gethash "y" rect)))))
 
 (defun i3-get-size (table)
   (let ((rect (gethash "rect" table)))
     (when rect
-      (list (gethash "width" rect) (gethash "height" rect)))))
+      (list (gethash "width" rect)
+            (gethash "height" rect)))))
 
 (defun i3-get-window-title (table) (gethash "name" table))
-
-(defun i3-get-con-id (table) (gethash "id" thing))
+(defun i3-get-urgent-p (table) (gethash "urgent" table))
+(defun i3-get-focused-p (table) (gethash "focused" table))
+(defun i3-get-output (table) (gethash "output" table))
+(defun i3-get-con-id (table) (gethash "id" table))
+(defun i3-get-id (table) (gethash "window" table))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Macros
@@ -251,7 +271,7 @@ The default value for TIMEOUT is 10 (seconds)"
     `(let ((,focused-sym (i3-focused-window))
            (,result-sym (progn ,@body)))
        (when ,focused-sym
-         (i3--ipc-command (i3-cmd-focus (gethash "id" ,focused-sym) 'con-id)))
+         (i3--ipc-command (i3-cmd-focus ,focused-sym)))
        ,result-sym)))
 
 (defmacro i3-batch-commands (&rest body)
@@ -309,7 +329,7 @@ locally binds it to the dynamic scope variable `*I3-THING*'."
   (i3-with-json (i3-get-tree)
                 (i3-with-saved-focus
                  (i3-batch-commands
-                  (let ((id (i3-con-id (i3-find-window "^VLC"))))
+                  (let ((id (i3-get-id (i3-find-window "^VLC"))))
                     (command 'floating id t)
                     (command 'set-pos id 1706 900)
                     (command 'set-size id 855 496)))))
