@@ -1,5 +1,7 @@
 # -*- mode: gitignore; -*-
 
+network-security.data
+
 ido.last
 
 auto-save-list
@@ -7,6 +9,7 @@ auto-save-list
 
 .cache
 .project-time.save.el
+timelog
 
 *~
 \#*\#

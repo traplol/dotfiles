@@ -1,6 +1,9 @@
-(load (expand-file-name "~/.emacs.d/my/my-lib"))
-(define-key (current-global-map) (kbd "<f5>") 'compile)
-(add-hook 'c-mode-common-hook 'my-make-cmd)
+(require 'my-lib)
+
+(progn
+  (define-key (current-global-map) (kbd "<f5>") 'compile)
+  (add-hook 'c-mode-common-hook 'my-make-cmd))
+
 (defun my-make-cmd ()
   (interactive)
   (unless (file-exists-p "Makefile")
@@ -16,3 +19,5 @@
 					 (or (getenv "CPPFLAGS") "-DDEBUG=9")
 					 (or (getenv "CFLAGS") "-ansi -pedantic -Wall -g")
 					 file))))))
+
+(provide 'my-compile)

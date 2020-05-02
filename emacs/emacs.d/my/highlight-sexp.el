@@ -39,14 +39,14 @@
 
 ;; default=#333333
 (defcustom hl-sexp-background-copy-highlighted-color
-  "#2a2a2a"
+  "#444444"
   "*The color used by HL-SEXP-COPY-HIGHLIGHTED to 'blink' the region copied."
   :type 'color
   :group 'highlight-sexp)
 
 ;; default=#555555
 (defcustom hl-sexp-background-color
-  "#3a3a3a"
+  "#353535"
   "*The color used for the background of the highlighted sexp."
   :type 'color
   :group 'highlight-sexp)

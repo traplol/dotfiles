@@ -1,5 +1,6 @@
 (require 'paredit)
 (require 'rainbow-delimiters)
+(require 'my-lib)
 
 (when (file-exists-p (expand-file-name "~/quicklisp/clhs-use-local.el"))
   (load (expand-file-name "~/quicklisp/clhs-use-local.el") t))
@@ -7,29 +8,23 @@
 (setq inferior-lisp-program "sbcl --dynamic-space-size 2048")
 (load (expand-file-name "~/quicklisp/slime-helper.el"))
 
-(load (expand-file-name "~/.emacs.d/my/highlight-sexp.el"))
+(load (my-dot-emacs "my/highlight-sexp.el"))
 (require 'highlight-sexp)
 
 (defun my--find-symbol ()
   (interactive)
   (case major-mode
     (emacs-lisp-mode
-     (let ((func (symbol-at-point))
-           (var (variable-at-point))
-           (face (face-at-point t)))
-       (cond ((functionp func)
-              (xref-push-marker-stack)
-              (find-function func))
-             ((/= 0 var)
-              (xref-push-marker-stack)
-              (find-variable var))
-             (face
-              (xref-push-marker-stack)
-              (find-face-definition face)))))
+     (let ((sym (symbol-at-point)))
+       (xref-push-marker-stack)
+       (unless (or (ignore-errors (find-function sym) t)
+                   (ignore-errors (find-variable sym) t)
+                   (ignore-errors (find-face-definition sym) t))
+         (xref-pop-marker-stack))))
     (lisp-mode (call-interactively 'slime-edit-definition))))
 
 (defun my--sexp-modes ()
-  (local-set-key (kbd "TAB") (lambda () (interactive) (completion-at-point)))
+  (local-set-key (kbd "TAB") (key-lambda (completion-at-point)))
   (local-set-key (kbd "C-M-i") 'hl-sexp-copy-highlighted)
   (local-set-key (kbd "C-M-j") 'hl-sexp-kill-highlighted)
   (local-set-key (kbd "<f2>") 'my--find-symbol)
@@ -38,7 +33,8 @@
   (paredit-mode 1)
   (show-paren-mode 1)
   (rainbow-delimiters-mode 1)
-  (highlight-sexp-mode 1))
+  (highlight-sexp-mode 1)
+  )
 
 (add-hook 'lisp-mode-hook 'my--sexp-modes)
 (add-hook 'emacs-lisp-mode-hook 'my--sexp-modes)

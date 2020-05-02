@@ -4,7 +4,7 @@
 
 set $mod Mod1
 #for_window [class=".*"] border normal 2    # use 'normal' to get class names
-for_window [class=".*"] border pixel 2
+for_window [class=".*"] border pixel 1
 for_window [class="qemu"] floating enable
 for_window [class="my-gbc"] floating enable
 for_window [class="game"] floating enable
@@ -13,7 +13,7 @@ for_window [class="game"] floating enable
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Droid Sans Mono Dotted for Powerline 8
+font pango:Droid Sans Mono Dotted for Powerline 14
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -85,6 +85,23 @@ bindsym $mod+0 workspace 10
 bindsym $mod+minus workspace prev
 bindsym $mod+equal workspace next
 
+bindsym $mod+KP_1 workspace 1
+bindsym $mod+KP_2 workspace 2
+bindsym $mod+KP_3 workspace 3
+bindsym $mod+KP_4 workspace 4
+bindsym $mod+KP_5 workspace 5
+bindsym $mod+KP_6 workspace 6
+bindsym $mod+KP_7 workspace 7
+bindsym $mod+KP_8 workspace 8
+bindsym $mod+KP_End workspace 1
+bindsym $mod+KP_Down workspace 2
+bindsym $mod+KP_Next workspace 3
+bindsym $mod+KP_Left workspace 4
+bindsym $mod+KP_Begin workspace 5
+bindsym $mod+KP_Right workspace 6
+bindsym $mod+KP_Home workspace 7
+bindsym $mod+KP_Up workspace 8
+
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace 2
@@ -134,9 +151,36 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 mode "gamemode" {
-    bindsym Mod4+Shift+g mode "default"
+    bindsym F12 mode "default"
+    bindsym $mod+KP_1 workspace 1
+    bindsym $mod+KP_2 workspace 2
+    bindsym $mod+KP_3 workspace 3
+    bindsym $mod+KP_4 workspace 4
+    bindsym $mod+KP_5 workspace 5
+    bindsym $mod+KP_6 workspace 6
+    bindsym $mod+KP_7 workspace 7
+    bindsym $mod+KP_8 workspace 8
+    bindsym $mod+KP_End workspace 1
+    bindsym $mod+KP_Down workspace 2
+    bindsym $mod+KP_Next workspace 3
+    bindsym $mod+KP_Left workspace 4
+    bindsym $mod+KP_Begin workspace 5
+    bindsym $mod+KP_Right workspace 6
+    bindsym $mod+KP_Home workspace 7
+    bindsym $mod+KP_Up workspace 8
+
+    bindsym $mod+Control+Shift+1 workspace 1
+    bindsym $mod+Control+Shift+2 workspace 2
+    bindsym $mod+Control+Shift+3 workspace 3
+    bindsym $mod+Control+Shift+4 workspace 4
+    bindsym $mod+Control+Shift+5 workspace 5
+    bindsym $mod+Control+Shift+6 workspace 6
+    bindsym $mod+Control+Shift+7 workspace 7
+    bindsym $mod+Control+Shift+8 workspace 8
+    bindsym $mod+Control+Shift+9 workspace 9
+    bindsym $mod+Control+Shift+0 workspace 10
 }
-bindsym Mod4+Shift+g mode "gamemode"
+bindsym F12 mode "gamemode"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -144,7 +188,7 @@ bar {
     position bottom
     tray_output HDMI-0
     output HDMI-0
-    font pango:Hack, pango:FontAwesome 10
+    font pango:Hack, pango:FontAwesome 14
     #font pango:Anonymice Powerline, pango:FontAwesome 12
     #font pango:DejaVu Sans Mono for Powerline, pango:FontAwesome 12
     #font pango:Droid Sans Mono for Powerline, pango:FontAwesome 12
@@ -155,14 +199,14 @@ bar {
     #font pango:Terminess Powerline, pango:FontAwesome 12
     status_command i3blocks -c /home/max/.i3/blocks-right
     colors {
-        background #021215
-        statusline #93a1a1
+        background #1c1c1c
+        statusline #333333
         #separator #2aa198
 
         # Type              border  background font
-        focused_workspace  #2aa198 #073642 #eee895
-        active_workspace   #073642 #002b36 #839496
-        inactive_workspace #002b36 #021215 #586e75
+        focused_workspace  #e0e0e0 #1c1c1c #f8f8f8
+        active_workspace   #404040 #111111 #f8f8f8
+        inactive_workspace #404040 #111111 #aaaaaa
         urgent_workspace   #cb4b16 #dc322f #fdf6e3
     }
 }
@@ -170,7 +214,7 @@ bar {
     position bottom
     tray_output DVI-D-0
     output DVI-D-0
-    font pango:Hack, pango:FontAwesome 8
+    font pango:Hack, pango:FontAwesome 14
     status_command i3blocks -c /home/max/.i3/blocks-left
     colors {
         background #021215
@@ -222,9 +266,9 @@ bindsym $mod+End exec --no-startup-id "amixer -D pulse set Master toggle && pkil
 # Extra Keybinds
 ########################
 # Mod4 -> Windows key
-bindsym Mod4+e exec "emacsclient -c"
-bindsym Mod4+c exec "google-chrome"
-bindsym Mod4+f exec "firefox"
+bindsym Mod4+e exec "emacsclient -c -n"
+bindsym Mod4+f exec "google-chrome"
+bindsym Mod4+c exec "firefox"
 bindsym Mod4+q exec "coding-layout.sh ~/workspace"
 bindsym $mod+d exec rofi -show run
 bindsym Mod4+d exec rofi -show window
@@ -233,7 +277,7 @@ bindsym Mod4+d exec rofi -show window
 # Colors
 ########################
 # class                 border  backgr. text    indicator child_border
-client.focused          #4ca8a9 #33afcc #002b36 #2a9ef4   #20a0a0
+client.focused          #e0e0e0 #404040 #101010 #333333   #f0f0f0
 client.focused_inactive #333333 #5f676a #ffffff #484e50   #333333
 client.unfocused        #333333 #222222 #888888 #292d2e   #222222
 client.urgent           #2f343a #900000 #ffffff #900000   #900000
@@ -244,14 +288,16 @@ client.background       #ffffff
 # dunst notification daemon
 exec --no-startup-id dunst -config "~/.i3/dunstrc"
 
+exec "compton -b"
+
 # Desktop background
 exec "~/.backgrounds/background.sh"
 
 # Transparency
-exec "~/.i3/trans.sh"
+#exec "~/.i3/trans.sh"
 
 # Fix screen tearing
-exec "/etc/X11/fix-screen-tearing.sh"
+#exec "/etc/X11/fix-screen-tearing.sh"
 
 # Keyboard repeat rate
 exec "xset r rate 250 110"

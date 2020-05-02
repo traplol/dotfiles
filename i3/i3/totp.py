@@ -16,8 +16,30 @@ def get_hotp_token(secret, intervals_no):
 def get_totp_token(secret):
     return get_hotp_token(secret, intervals_no=int(time.time())//30)
 
+def usage():
+    print("usage: totp.py <name> <totp secret> [1|3]")
+    print("or     totp.py --secret <totp secret>")
+    print("or     totp.py --file <path to secret file>")
+    exit(0)
 
 if __name__ == "__main__":
+    if len(sys.argv) == 1 or "-h" in sys.argv or "--help" in sys.argv:
+        usage();
+
+    if len(sys.argv) == 3:
+        secret = None
+        if sys.argv[1] == "--secret":
+            secret = sys.argv[2]
+        elif sys.argv[1] == "--file":
+            with open(sys.argv[2], "rb") as f:
+                secret = f.readline().strip()
+        if secret is not None:
+            succ, token = get_totp_token(secret)
+            if succ:
+                print(token)
+            exit(0)
+
+
     if len(sys.argv) > 3 and sys.argv[3] == "1":
         token = ""
         succ = False
@@ -42,4 +64,4 @@ if __name__ == "__main__":
         print(output)
         print(output)
     else:
-        print(sys.argv)
+        usage()

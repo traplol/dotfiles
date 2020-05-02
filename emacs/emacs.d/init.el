@@ -1,10 +1,11 @@
+
+(let ((default-directory (expand-file-name user-emacs-directory)))
+  (normal-top-level-add-subdirs-to-load-path))
+
 ;;; Load my packman.
 (load (expand-file-name "~/.emacs.d/my/packman/packman.el"))
-
-;;; Load my init.
-(load (expand-file-name "~/.emacs.d/my/init.el"))
-
-
+(require 'my-packman)
+(my-packman-install-my-packages)
 
 ;; Custom menu stuff beyond this point.
 (custom-set-variables
@@ -16,11 +17,12 @@
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
- '(custom-enabled-themes '(tango-dark))
+ '(help-at-pt-display-when-idle '(flymake-overlay) nil (help-at-pt))
+ '(help-at-pt-timer-delay 0.9)
  '(inhibit-startup-screen t)
  '(org-babel-load-languages '((python . t) (C . t) (emacs-lisp . t)))
  '(package-selected-packages
-   '(pdf-tools aggressive-indent centered-cursor-mode rainbow-mode company-irony-c-headers irony-eldoc neotree exec-path-from-shell rmsbolt racket-mode kotlin-mode vue-mode ensime scala-mode php-mode d-mode flymake-cursor flymake-haskell-multi markdown-mode flycheck-haskell haskell-mode unicode-fonts ruby-end rainbow-delimiters racer paredit magit go-mode flycheck-rust flycheck-irony evil-numbers evil company-irony bison-mode autopair auto-complete)))
+   '(nand2tetris-assembler company-nand2tetris pdf-tools aggressive-indent centered-cursor-mode rainbow-mode company-irony-c-headers irony-eldoc neotree exec-path-from-shell rmsbolt racket-mode kotlin-mode vue-mode ensime scala-mode d-mode flymake-cursor flymake-haskell-multi markdown-mode flycheck-haskell haskell-mode unicode-fonts ruby-end rainbow-delimiters racer paredit magit go-mode flycheck-rust flycheck-irony evil-numbers evil company-irony bison-mode autopair auto-complete)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -38,3 +40,6 @@
 ;; ## added by OPAM user-setup for emacs / base ## 56ab50dc8996d2bb95e7856a6eddb17b ## you can edit, but keep this line
 (require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
 ;; ## end of OPAM user-setup addition for emacs / base ## keep this line
+
+;;; Load my init.
+(load (expand-file-name "~/.emacs.d/my/init.el"))

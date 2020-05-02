@@ -1,80 +1,76 @@
-# Powerline characters 
+# Powerline characters         
 
 command=/usr/local/libexec/i3blocks/$BLOCK_NAME
 full_text=~~
 separator=false
 separator_block_width=0
 markup=pango
-color=#002b36
-background=#021215
+color=#333333
+background=#1c1c1c
 
-#A=#CCCCCC
-#B=#333333
-#C=#AAAAAA
-#
-#X=#333333
-#Y=#CCCCCC
-#Z=#111111
 
-A=#002b36
-B=#021215
-C=#AAAAAA
-
-X=#021215
-Y=#002b36
-Z=#AAAAAA
-
+BLACK=#000000
+WHITE=#FFFFFF
+GREY11=#1c1c1c
+GREY17=#2b2b2b
+GREY20=#333333
+GREY40=#404040
+GREY88=#e0e0e0
 
 [radioinfo]
 interval=1
-command=~/.i3/powerline $B "#F0EAD6" "#111111" "$(radio "$BLOCK_BUTTON" --i3)" --font "Terminess Powerline"
+command=~/.i3/powerline $background "#F0EAD6" "#111111" "$(radio "$BLOCK_BUTTON" --i3)" --font "Terminess Powerline"
 
 [project-time]
 interval=20
-command=~/.i3/powerline "#F0EAD6" $Y $Z "$(racket ~/.i3/project-time-blocklet.rkt)" --pad-both
+command=~/.i3/powerline "#F0EAD6" $GREY40 $WHITE "$(racket ~/.i3/project-time-blocklet.rkt)" --pad-both
+
+[covid-info]
+interval=20
+command=~/.i3/powerline $GREY40 $GREY20 $WHITE "$(tail -n1 /home/max/covid19/covid19-cases.csv | awk -F',' '{ printf "C:%s/D:%s", $2, $3}')" --pad-both --rtrim
 
 [volume]
 interval=once
 signal=1
-command=~/.i3/powerline $A $B $C "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)" --pad-both
+command=~/.i3/powerline $GREY20 $GREY40 $WHITE "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)" --pad-both
 
 [disk]
 interval=15
-command=~/.i3/powerline $X $Y $Z "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)" --pad-both
+command=~/.i3/powerline $GREY40 $GREY20 $WHITE "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)" --pad-both
 
 [memory]
 interval=5
-command=~/.i3/powerline $A $B $C "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)" --pad-both
+command=~/.i3/powerline $GREY20 $GREY40 $WHITE "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)" --pad-both
 
 [cpu_usage]
 interval=1
-command=~/.i3/powerline $X $Y $Z "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)" --pad-both
+command=~/.i3/powerline $GREY40 $GREY20 $WHITE "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)" --pad-both
 
 [iface]
 interval=5
-command=~/.i3/powerline $A $B "#00FF00" "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)" --pad-left
+command=~/.i3/powerline $GREY20 $GREY40 "#00FF00" "$(/usr/local/libexec/i3blocks/$BLOCK_NAME)" --pad-left
 
 [pi-stat]
 interval=5
-command=~/.i3/powerline $A $B $C "$(~/.i3/server-stat.sh 192.168.1.142 " P" " P")" --no-arrow
+command=~/.i3/powerline $GREY20 $GREY40 $WHITE "$(~/.i3/server-stat.sh 192.168.1.142 " P" " P")" --no-arrow
 
 [server-stat]
 interval=5
-command=~/.i3/powerline $A $B $C "$(~/.i3/server-stat.sh 192.168.1.10 "S" "S")" --no-arrow
+command=~/.i3/powerline $GREY20 $GREY40 $WHITE "$(~/.i3/server-stat.sh 192.168.1.10 "S" "S")" --no-arrow
 
 [inet-stat]
 interval=5
-command=~/.i3/powerline $A $B $C "$(~/.i3/server-stat.sh 8.8.8.8 "I " "I ")" --no-arrow
+command=~/.i3/powerline $GREY20 $GREY40 $WHITE "$(~/.i3/server-stat.sh 1.1.1.1 "I " "I ")" --no-arrow
 
 [bandwidth]
 interval=3
-command=~/.i3/powerline $X $Y $Z "$(~/.i3/$BLOCK_NAME)" --pad-both
+command=~/.i3/powerline $GREY20 $GREY40 $WHITE "$(~/.i3/$BLOCK_NAME)" --no-arrow --pad-both
 
 [today]
 interval=60
-command=~/.i3/powerline $A $B $C " $(date '+%a %b %d') "
+command=~/.i3/powerline $GREY40 $GREY20 $WHITE " $(date '+%a %b %d') "
 
 [now]
 interval=1
-command=~/.i3/powerline $X "#338fcc" "#111111" " $(date '+%T') " --font "DejaVu Sans Mono"
+command=~/.i3/powerline $GREY20 $GREY88 $GREY11 " <b>$(date '+%T')</b> " --font "DejaVu Sans Mono"
 

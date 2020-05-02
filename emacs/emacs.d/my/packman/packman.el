@@ -25,16 +25,16 @@
 (defun my-packman-package-exists (pkg-sym)
   "Checks if a package exists.
 Returns t if the package exists, otherwise nil."
-       (interactive "SPackage name: ")
-       (when (not package-archive-contents)
-         (package-refresh-contents))
-       (if (assoc pkg-sym package-archive-contents)
-           (let ()
-             (message (format "Package '%s' exists." pkg-sym))
-             t)
-         (let ()
-           (message (format "Package '%s' does not exist." pkg-sym))
-           nil)))
+  (interactive "SPackage name: ")
+  (when (not package-archive-contents)
+    (package-refresh-contents))
+  (if (assoc pkg-sym package-archive-contents)
+      (let ()
+        (message (format "Package '%s' exists." pkg-sym))
+        t)
+    (let ()
+      (message (format "Package '%s' does not exist." pkg-sym))
+      nil)))
 
 (defun my-packman-install-package (pkg-sym)
   "Installs a package."
@@ -87,3 +87,5 @@ Returns t if the package exists, otherwise nil."
       (print (list 'setq 'my-packman-packages-list (list 'quote my-packman-packages-list)) buf)
       (save-buffer))))
 (my-save-packman-list my-packman-packages-list-file)
+
+(provide 'my-packman)

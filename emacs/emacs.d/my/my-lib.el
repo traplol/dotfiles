@@ -1,9 +1,15 @@
 (require 'cl)
 
+(defun my-dot-emacs (path)
+  "Returns an absolute path where PATH is relative the `user-emacs-directory'."
+  (concat
+   (file-name-as-directory (expand-file-name user-emacs-directory))
+   path))
+
 (defun my-no-op (&rest rest)
-  "An interactive function that accepts any arguments, does nothing, and returns nothing."
+  "An interactive function that accepts any arguments, does nothing, and returns nil."
   (interactive)
-  (values))
+  nil)
 
 (defun* get-closest-pathname (file &optional (max-level 3))
   (let* ((root (expand-file-name "/"))
@@ -63,18 +69,14 @@
     (forward-sexp (or arg 1))
     (copy-region-as-kill opoint (point))))
 
-(defun my-layout-save (&optional register)
-  (interactive)
-  (frameset-to-register (or register ?1)))
-
-(defun my-layout-load (&optional register)
-  (interactive)
-  (jump-to-register (or register ?1) t))
-
 (defun my-cd (&optional dir)
   (interactive "DChange default directory: ")
   (when (slime-connected-p)
     (slime-cd dir))
   (cd dir))
+
+(defmacro key-lambda (&rest body)
+  (declare (indent defun))
+  `#'(lambda () (interactive) ,@body))
 
 (provide 'my-lib)

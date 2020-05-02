@@ -1,10 +1,5 @@
 ;; my-lib
-(load (expand-file-name "~/.emacs.d/my/my-lib"))
 (require 'my-lib)
-(load (expand-file-name "~/.emacs.d/my/my-i3-manip"))
-(require 'my-i3-manip)
-(load (expand-file-name "~/.emacs.d/my/my-media"))
-(require 'my-media)
 ;; Sets environment variables from shell
 (require 'exec-path-from-shell)
 (exec-path-from-shell-initialize)
@@ -22,14 +17,17 @@
 (setq column-number-mode t)
 ;; Disable backup files (*~ files)
 (setq make-backup-files nil)
-;; Emacs server
-(require 'server)
-(unless (server-running-p)
-  (server-start))
+(when nil
+  ;; Emacs server
+  (require 'server)
+  (unless (server-running-p)
+    (server-start)))
 
 (require 'evil)
 (evil-mode 1)
 
+;; set default major mode for the *scratch* buffer
+(setq initial-major-mode 'emacs-lisp-mode)
 
 (require 'company)
 
@@ -53,7 +51,7 @@
 (progn
   (set-language-environment "UTF-8")
   (set-default-coding-systems 'utf-8)
-  (let ((font-to-use "Hack 9"))
+  (let ((font-to-use "Hack 16"))
     (add-to-list 'default-frame-alist (cons 'font font-to-use))
     (set-face-attribute 'default t :font font-to-use))
   (require 'unicode-fonts)
@@ -72,11 +70,11 @@
 (global-auto-revert-mode t)
 
 ;; auto-update any new packages.
-(load (expand-file-name "~/.emacs.d/my/packman/packman.el"))
-(my-packman-install-my-packages)
+;;(load (my-dot-emacs "my/packman/packman"))
+;;(my-packman-install-my-packages)
 
 ;; f5 to compile.
-;;(load (expand-file-name "~/.emacs.d/my/my-compile"))
+;;(require 'my-compile)
 
 ;; auto-complete
 (require 'auto-complete)
@@ -86,21 +84,21 @@
 (ac-config-default)
 
 ;; My c and cpp mode options!
-(load (expand-file-name "~/.emacs.d/my/my-c-and-c++-mode-options"))
+(load (my-dot-emacs "my/my-c-and-c++-mode-options"))
 ;; My lisp mode options
-(load (expand-file-name "~/.emacs.d/my/my-lisp-modes-options"))
+(load (my-dot-emacs "my/my-lisp-modes-options"))
 ;; My Tupfile mode
-(load (expand-file-name "~/.emacs.d/my/my-tup-mode"))
+(load (my-dot-emacs "my/my-tup-mode"))
 (require 'tup-mode)
 (add-to-list 'auto-mode-alist '("\\.tup\\'" . tup-mode))
 (add-to-list 'auto-mode-alist '("\\Tupfile\\'" . tup-mode))
 
 ;; My Malang mode
-(load (expand-file-name "~/.emacs.d/my/malang-mode"))
+(load (my-dot-emacs "my/malang-mode"))
 (add-to-list 'auto-mode-alist '("\\.ma\\'" . mal-mode))
 
 ;; OCaml config
-;;(load (expand-file-name "~/.emacs.d/my/my-ocaml-mode-config"))
+;;(load (my-dot-emacs "my/my-ocaml-mode-config"))
 
 ;; irony-mode
 ;;(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
@@ -170,16 +168,28 @@
 
 
 ;; Experimenting with transparency
-(set-frame-parameter (selected-frame) 'alpha '(98 98))
+;;(set-frame-parameter (selected-frame) 'alpha '(100 100))
 
 ;; My Keyboard shortcut overrides
-(load (expand-file-name "~/.emacs.d/my/my-keyboard-overrides"))
+(load (my-dot-emacs "my/my-keyboard-overrides"))
 
 ;; My global minor-mode that keep track of time spent editing files and aggregates
 ;; that time into tables
-(load (expand-file-name "~/.emacs.d/my/project-time"))
+
+(load (my-dot-emacs "my/project-time"))
 (project-time-mode 1)
 
-(pdf-tools-install)
+;;(pdf-tools-install)
 
+(setq nand2tetris-core-base-dir (expand-file-name "~/workspace/nand2tetris/nand2tetris"))
+(add-to-list 'auto-mode-alist '("\\.hdl\\'" . nand2tetris-mode))
+
+(require 'i3-ipc)
+(require 'my-media)
+(require 'my-layout)
+(progn ;; theme stuffs
+  (load-theme 'tango-dark t)
+  (add-to-list 'load-path (my-dot-emacs "powerline/"))
+  (require 'powerline)
+  (powerline-default-theme))
 (find-file (expand-file-name "~/.notes/general.org"))

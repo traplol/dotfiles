@@ -32,6 +32,29 @@
 #include <array>
 #include <stdio.h>
 #include <sstream>
+#include <algorithm>
+#include <cctype>
+#include <locale>
+
+static inline void ltrim(std::string &s) {
+    s.erase(s.begin(), std::find_if(s.begin(), 
+                                    s.end(), 
+                                    [](int ch) { return !std::isspace(ch); }));
+}
+
+static inline void rtrim(std::string &s) {
+    s.erase(std::find_if(s.rbegin(), 
+                         s.rend(), 
+                         [](int ch) {
+                             return !std::isspace(ch);
+                         }).base(), 
+            s.end());
+}
+
+static inline void trim(std::string &s) {
+    ltrim(s);
+    rtrim(s);
+}
 
 template<typename Out>
 static inline void split(const std::string &s, char delim, Out result) {
@@ -89,6 +112,8 @@ static const std::array<const char*, 256> color_table = {
     
 
 void rainbowize(std::string &output, const std::string &text, const std::string &background) {
+    
+    // valid utf-8 codepoint enumeration
     for(size_t i = 0; i < text.length();) {
         int cplen = 1;
 
@@ -127,6 +152,9 @@ void usage() {
     puts("    \"some text to wrap\" - Required: the input text to wrap");
     puts("");
     puts("    --help           -h           shows this message and exits");
+    puts("    --ltrim                       trims whitespace from beginning of text");
+    puts("    --rtrim                       trims whitespace from end of text");
+    puts("    --trim           -t           trims whitespace from both ends of text");
     puts("    --no-arrow                    doesn't print the powerline arrow");
     puts("    --no-left-bg                  doesn't set background for arrow");
     puts("    --no-left-fg                  doesn't set foreground for arrow");
@@ -204,6 +232,9 @@ int main(int argc, char **argv) {
     bool pad_left = false;
     bool pad_right = false;
     bool rainbow_text = false;
+    bool left_trim = false;
+    bool right_trim = false;
+    bool both_trim = false;
     std::string font;
 
     for (int i = 3; i < argc; ++i) {
@@ -222,6 +253,15 @@ int main(int argc, char **argv) {
         }
         else if (arg_match("--no-arrow", p)) {
             no_arrow = true;
+        }
+        else if (arg_match("--ltrim", p)) {
+            left_trim = true;
+        }
+        else if (arg_match("--rtrim", p)) {
+            right_trim = true;
+        }
+        else if (arg_match("-t", p) || arg_match("--trim", p)) {
+            both_trim = true;
         }
         else if (arg_match("-l", p) || arg_match("--pad-left", p)) {
             pad_left = true;
@@ -246,6 +286,20 @@ int main(int argc, char **argv) {
                 exit(-1);
             }
         }
+    }
+    
+    if (left_trim && right_trim) {
+        both_trim = true;
+    }
+    
+    if (both_trim) {
+        trim(text);
+    }
+    else if (left_trim) {
+        ltrim(text);
+    }
+    else if (right_trim) {
+        rtrim(text);
     }
     
     std::string output;

@@ -134,7 +134,12 @@ PT--TIME-OF-LAST-SAVE to the current time."
   "Attempts to read the contents of PROJECT-TIME-SAVE-FILE and sets PT--BUFFER-TIMES."
   (when (file-exists-p project-time-save-file)
     (with-temp-buffer (insert-file-contents project-time-save-file)
-                      (setq pt--buffer-times (first (read-from-string (buffer-string)))))))
+                      (let ((code (buffer-string)))
+                        (when (= 0 (length code))
+                          (setq code "()"))
+                        (let ((times (first (read-from-string code))))
+                          (setq pt--buffer-times (if (consp times) times nil)))))))
+
 
 
 (defun pt--on-after-change (a b c)

@@ -306,7 +306,12 @@
     summary = "*"
 
 [spotify]
-    appname = "Spotify"
+    appname = spotify
+    summary = "*"
+    format = ""
+
+[Spotify]
+    appname = Spotify
     summary = "*"
     format = ""
 
