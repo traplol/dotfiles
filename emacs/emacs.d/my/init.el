@@ -7,7 +7,9 @@
 ;; store backup and autosave files in /tmp directory
 (setq backup-directory-alist         `((".*" . ,temporary-file-directory))
       auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
-      create-lockfiles               nil)
+      ;; Disable backup files (*~ files) and .lock files
+      create-lockfiles               nil
+      make-backup-files              nil)
 
 ;; Disable the toolbar in gui-mode
 (tool-bar-mode -1)
@@ -15,8 +17,7 @@
 (menu-bar-mode -1)
 ;; Line/column mode
 (setq column-number-mode t)
-;; Disable backup files (*~ files)
-(setq make-backup-files nil)
+
 (when nil
   ;; Emacs server
   (require 'server)
