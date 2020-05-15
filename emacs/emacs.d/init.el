@@ -22,7 +22,7 @@
  '(inhibit-startup-screen t)
  '(org-babel-load-languages '((python . t) (C . t) (emacs-lisp . t)))
  '(package-selected-packages
-   '(nand2tetris-assembler company-nand2tetris pdf-tools aggressive-indent centered-cursor-mode rainbow-mode company-irony-c-headers irony-eldoc neotree exec-path-from-shell rmsbolt racket-mode kotlin-mode vue-mode ensime scala-mode d-mode flymake-cursor flymake-haskell-multi markdown-mode flycheck-haskell haskell-mode unicode-fonts ruby-end rainbow-delimiters racer paredit magit go-mode flycheck-rust flycheck-irony evil-numbers evil company-irony bison-mode autopair auto-complete)))
+   '(helm-ag "helm" "helm" "helm" "fjasklfl" aggressive-indent gnu-elpa-keyring-update helm)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -37,9 +37,6 @@
  '(rainbow-delimiters-depth-7-face ((t (:foreground "turquoise4"))))
  '(rainbow-delimiters-depth-8-face ((t (:foreground "medium blue"))))
  '(rainbow-delimiters-depth-9-face ((t (:foreground "chocolate")))))
-;; ## added by OPAM user-setup for emacs / base ## 56ab50dc8996d2bb95e7856a6eddb17b ## you can edit, but keep this line
-(require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
-;; ## end of OPAM user-setup addition for emacs / base ## keep this line
 
 ;;; Load my init.
 (load (expand-file-name "~/.emacs.d/my/init.el"))

@@ -5,8 +5,9 @@
 (when (file-exists-p (expand-file-name "~/quicklisp/clhs-use-local.el"))
   (load (expand-file-name "~/quicklisp/clhs-use-local.el") t))
 
-(setq inferior-lisp-program "sbcl --dynamic-space-size 2048")
+(setq inferior-lisp-program "sbcl --dynamic-space-size 12288")
 (load (expand-file-name "~/quicklisp/slime-helper.el"))
+
 
 (load (my-dot-emacs "my/highlight-sexp.el"))
 (require 'highlight-sexp)
@@ -46,5 +47,7 @@
 (defun my--lisp-local-keys ()
   (local-set-key (kbd "<f1>") 'slime-hyperspec-lookup)
   (local-set-key (kbd "<f3>") 'slime-disassemble-symbol)
+  (local-set-key (kbd "<f4>") 'slime-macroexpand-1)
+  (local-set-key (kbd "C-<f9>") 'slime-restart-inferior-lisp)
   )
 (add-hook 'lisp-mode-hook 'my--lisp-local-keys)

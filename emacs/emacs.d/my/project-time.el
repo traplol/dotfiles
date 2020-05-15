@@ -4,11 +4,11 @@ The time up to and while idle is not tracked.
 Default value is 120 seconds (2 minutes)")
 
 (defvar project-time-save-interval 30
-  "Time between auto-saves of the PROJECT-TIME-SAVE-FILE
+  "Time between auto-saves of the PROJECT-TIME-SAVE-FILE.
 Default value is 30 seconds")
 
 (defvar project-time-save-file (concat (expand-file-name user-emacs-directory) ".project-time.save.el")
-  "The name of the file to save to
+  "The path of the file to save to.
 Default value is $EMACS_DIR/.project-time.save.el")
 
 (defvar pt--buffer-times '()
@@ -69,21 +69,29 @@ Returns an alist of (DIRNAME . TOTAL-TIME)"
             (pt--format-date last-update-time)
             (pt--format-timespan time-total))))
 
-(defun pt--pretty-print-table ()
-  (progn
-    (message "%-25s%-25s%s" "Buffer" "Last-Edit" "Total Time")
-    (dolist (entry pt--buffer-times)
+(defun pt--prettify-table ()
+  (let ((msgs)
+        (sorted (stable-sort pt--buffer-times
+                             (lambda (a b)
+                               (> (caddr a) (caddr b))))))
+    (push (format "%-25s%-25s%s" "Buffer" "Last-Edit" "Total Time") msgs)
+    (dolist (entry sorted)
       (let ((name (car entry))
             (last-update-time (cadr entry))
             (time-total (caddr entry)))
-        (message "%-25s%-25s%s"
-                 (pt--format-name name)
-                 (pt--format-date last-update-time)
-                 (pt--format-timespan time-total))))))
+        (push (format "%-25s%-25s%s"
+                      (pt--format-name name)
+                      (pt--format-date last-update-time)
+                      (pt--format-timespan time-total))
+              msgs)))
+    (mapconcat 'identity (reverse msgs) "\n")))
+
+(defun pt--pretty-print-table ()
+  (message (pt--prettify-table)))
 
 (defun pt--pretty-print-consolidate ()
-  (let ((sorted (sort (pt--consolidate-all-times-to-dirs)
-                      (lambda (a b) (and (< (cdr a) (cdr b)))))))
+  (let ((sorted (stable-sort (pt--consolidate-all-times-to-dirs)
+                             (lambda (a b) (and (< (cdr a) (cdr b)))))))
     (dolist (entry sorted)
       (let ((dir (car entry))
             (time-total (cdr entry)))

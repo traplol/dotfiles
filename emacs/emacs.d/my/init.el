@@ -29,23 +29,33 @@
 ;; set default major mode for the *scratch* buffer
 (setq initial-major-mode 'emacs-lisp-mode)
 
-(require 'company)
+;;(require 'company)
 
-;; IDO
-(require 'ido)
-(setq ffap-machine-p-known 'reject
-      ffap-machine-p-unknown 'reject
-      ido-enable-flex-matching  t
-      ido-everywhere            t
-      ido-use-filename-at-point 'nil
-      ido-create-new-buffer     'always)
-(ido-mode 1)
+(let ((use-helm t))
+  (if use-helm
+      (progn
+        (setq helm-mode-fuzzy-match t
+              helm-completion-in-region-fuzzy-match t
+              helm-candidate-number-limit 100)
+        (helm-mode 1)
+        (global-set-key (kbd "C-x C-f") 'helm-find-files))
+    (progn
+      ;; IDO
+      (require 'ido)
+      (setq ffap-machine-p-known 'reject
+            ffap-machine-p-unknown 'reject
+            ido-enable-flex-matching  t
+            ido-everywhere            t
+            ido-use-filename-at-point 'nil
+            ido-create-new-buffer     'always)
+      (ido-mode 1))))
 
 ;; Flymake Cursor
-(eval-after-load 'flymake '(require 'flymake-cursor))
-(custom-set-variables
- '(help-at-pt-timer-delay 0.9)
- '(help-at-pt-display-when-idle '(flymake-overlay)))
+(when nil
+  (eval-after-load 'flymake '(require 'flymake-cursor))
+  (custom-set-variables
+   '(help-at-pt-timer-delay 0.9)
+   '(help-at-pt-display-when-idle '(flymake-overlay))))
 
 ;; Font stuff
 (progn
@@ -111,46 +121,13 @@
 ;;(add-hook 'irony-mode-hook 'my-irony-mode-hook) ;
 ;;(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
-(defun my-go-mode-hook ()
-  (setq tab-width 4)
-  (setq indent-tabs-mode t)
-  (add-hook 'before-save-hook 'gofmt-before-save))
-
-(add-hook 'go-mode-hook 'my-go-mode-hook)
-
-(add-hook 'html-mode-hook 'web-mode)
-
 ;; Auto complete the `end' keyword for ruby control structures
-(require 'ruby-end)
-(add-hook 'ruby-mode-hook 'ruby-end-mode)
-(setq ruby-end-insert-newline nil)
-
-;; Add '.scss' file extension to open in css-mode
-(add-to-list 'auto-mode-alist '("\\.scss\\'" . css-mode))
-
-(defun my-js-erb-modes ()
-  (javascript-mode)
-  (web-mode))
-;; Add '.js.erb' file extension to open in javascript-mode and web-mode
-(add-to-list 'auto-mode-alist '("\\.js.erb\\'" . my-js-erb-modes))
+;;(require 'ruby-end)
+;;(add-hook 'ruby-mode-hook 'ruby-end-mode)
+;;(setq ruby-end-insert-newline nil)
 
 ;; GNU Assembler
 (setq asm-comment-char ?\#) ; set the comment char to # or ;
-
-;; Rust mode
-(require 'rust-mode)
-(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-(setq rust-format-on-save nil)
-(add-hook 'rust-mode-hook 'racer-mode)
-(add-hook 'racer-mode-hook 'eldoc-mode)
-(add-hook 'racer-mode-hook 'company-mode)
-(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
-(setq company-tooltip-align-annotations t)
-
-;; Haskell mode
-(require 'haskell-mode)
-(require 'flymake-haskell-multi)
-(add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
 
 (require 'eww)
 (defun my-eww-browse-url (url &optional new-window)
@@ -173,16 +150,10 @@
 ;; My Keyboard shortcut overrides
 (load (my-dot-emacs "my/my-keyboard-overrides"))
 
-;; My global minor-mode that keep track of time spent editing files and aggregates
+;; My global minor-mode that keeps track of time spent editing files and aggregates
 ;; that time into tables
-
 (load (my-dot-emacs "my/project-time"))
 (project-time-mode 1)
-
-;;(pdf-tools-install)
-
-(setq nand2tetris-core-base-dir (expand-file-name "~/workspace/nand2tetris/nand2tetris"))
-(add-to-list 'auto-mode-alist '("\\.hdl\\'" . nand2tetris-mode))
 
 (require 'i3-ipc)
 (require 'my-media)

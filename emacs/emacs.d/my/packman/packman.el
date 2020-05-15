@@ -5,11 +5,9 @@
       (expand-file-name "~/.emacs.d/my/packman/packages.el"))
 
 (require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
-(add-to-list 'package-archives
-             '("org" . "http://orgmode.org/elpa/") t)
-;;(package-initialize)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
 
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -26,30 +24,46 @@
   "Checks if a package exists.
 Returns t if the package exists, otherwise nil."
   (interactive "SPackage name: ")
-  (when (not package-archive-contents)
+  (unless package-archive-contents
     (package-refresh-contents))
   (if (assoc pkg-sym package-archive-contents)
-      (let ()
-        (message (format "Package '%s' exists." pkg-sym))
+      (progn
+        (message "Package '%s' exists." pkg-sym)
         t)
-    (let ()
-      (message (format "Package '%s' does not exist." pkg-sym))
+    (progn
+      (message "Package '%s' does not exist." pkg-sym)
       nil)))
 
-(defun my-packman-install-package (pkg-sym)
-  "Installs a package."
-  (interactive "SPackage name: ")
-  (when (my-packman-package-exists pkg-sym)
-    (if (not (package-installed-p pkg-sym))
-        (let ()
-          (message (format "Installing package: %s" pkg-sym))
-          (package-install pkg-sym)
-          (add-to-list 'my-packman-packages-list pkg-sym)
-          (print my-packman-packages-list)
-          (print pkg-sym)		  
-          (my-save-packman-list my-packman-packages-list-file))
-      (let ()
-        (message (format "Package '%s' already installed." pkg-sym))))))
+(defun my-packman-install-package (pkg)
+  "Installs a package and saves it in the MY-PACKMAN-PACKAGES-LIST-FILE."
+  (interactive
+   (progn
+     (unless package-archive-contents
+       (package-refresh-contents))
+     (list (intern (completing-read
+                    "Install package: "
+                    (delq nil
+                          (mapcar (lambda (elt)
+                                    (unless (package-installed-p (car elt))
+                                      (symbol-name (car elt))))
+                                  package-archive-contents))
+                    nil t)))))
+  (let ((name (if (package-desc-p pkg)
+                  (package-desc-name pkg)
+                pkg)))
+    (when pkg
+      (if (not (package-installed-p name))
+          (progn
+            (message "Installing package: %s" name)
+            (package-install pkg)
+            (add-to-list 'my-packman-packages-list name)
+            ;;(print my-packman-packages-list)
+            ;;(print pkg-sym)
+            (my-save-packman-list my-packman-packages-list-file)
+            (if (package-desc-p pkg)
+                (message "Installed %s v%s" name (package-desc-version pkg))
+              (message "Installed %s" name)))
+        (message "Package '%s' already installed." name)))))
 
 (defun my-packman-install-packages-from-list (package-list)
   "Installs the packages in the PACKAGE-LIST."
