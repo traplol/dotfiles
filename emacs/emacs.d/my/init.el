@@ -34,6 +34,9 @@
 (let ((use-helm t))
   (if use-helm
       (progn
+        (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
+        (define-key helm-map (kbd "<tab>") #'helm-execute-persistent-action)
+        (define-key helm-map (kbd "C-z") #'helm-select-action)
         (setq helm-mode-fuzzy-match t
               helm-completion-in-region-fuzzy-match t
               helm-candidate-number-limit 100)
@@ -160,7 +163,9 @@
 (require 'my-layout)
 (progn ;; theme stuffs
   (load-theme 'tango-dark t)
-  (add-to-list 'load-path (my-dot-emacs "powerline/"))
-  (require 'powerline)
-  (powerline-default-theme))
+  (let ((powerline-path (my-dot-emacs "powerline/")))
+    (when (file-directory-p powerline-path)
+      (add-to-list 'load-path )
+      (require 'powerline)
+      (powerline-default-theme))))
 (find-file (expand-file-name "~/.notes/general.org"))
