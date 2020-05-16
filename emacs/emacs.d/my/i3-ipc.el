@@ -389,18 +389,16 @@ call to `i3-tree'"
 
 (defun x-register-client-message-handler (message-type handler)
   (or (functionp handler) (error "HANDLER is not a function. %S" handler))
-  (let ((atom-value (typecase message-type
+  (let ((atom-value (etypecase message-type
                       (integer message-type)
                       (string (x-get-name-atom message-type))
-                      (symbol (x-get-name-atom message-type))
-                      (otherwise (error "MESSAGE-TYPE is not of type integer, string, or symbol. %S" message-type)))))
+                      (symbol (x-get-name-atom message-type)))))
     (push handler (gethash atom-value x-client-message-handlers))))
 
 (defun x-handle-one-client-message (event)
   (let ((message-type (alist-get 'message-type event)))
     (dolist (handler (gethash message-type x-client-message-handlers))
       (funcall handler event))))
-
 
 (lexical-let ((registered-handler-p nil))
   (when (eq 'x (window-system))
@@ -567,10 +565,9 @@ id window-type con-mark title urgent workspace tiling floating"
 
 TYPE-HINT may be a string or one of the symbols: class instance window-role con-id 
 id window-type con-mark title urgent workspace tiling floating"
-  (let ((ws-name (typecase workspace
+  (let ((ws-name (etypecase workspace
                    (string workspace)
-                   (hash-table (i3-get-name workspace))
-                   (otherwise (error "i3-ipc: WORKSPACE must be either string or hash-table")))))
+                   (hash-table (i3-get-name workspace)))))
     (i3-format-command (or type-hint 'id)
                        thing
                        "move container to workspace %s"
@@ -788,7 +785,7 @@ When called with a symbol and args `i3-cmd-*' is prepended to the symbol and if 
 is `fboundp' then it is called with args.
 "
   `(cl-flet ((command (cmd &rest args)
-                      (i3--ipc-command (typecase cmd
+                      (i3--ipc-command (etypecase cmd
                                          (string cmd)
                                          (symbol (let ((sym (intern (concat "i3-cmd-" (symbol-name cmd)))))
                                                    (unless (fboundp sym) (error "i3-ipc: Unbound function %s" sym))
@@ -802,10 +799,9 @@ locally binds it to the dynamic scope variable `*i3-thing*'."
   (declare (indent defun))
   (let ((json-sym (gensym)))
     `(let* ((,json-sym ,json)
-            (*i3-thing* (typecase ,json-sym
+            (*i3-thing* (etypecase ,json-sym
                           (string (i3--string-json ,json-sym))
-                          (hash-table ,json-sym)
-                          (otherwise (error "i3-ipc: Unrecognized type %s" ,json-sym)))))
+                          (hash-table ,json-sym))))
        ,@body)))
 
 (provide 'i3-ipc)
