@@ -1,3 +1,4 @@
+(require 'cl)
 
 ;;; The file containing the packages to install and the
 ;;; file that will be written to when installing a package.
@@ -33,6 +34,20 @@ Returns t if the package exists, otherwise nil."
     (progn
       (message "Package '%s' does not exist." pkg-sym)
       nil)))
+
+(defun my-packman-delete-package (pkg)
+  (interactive
+   (progn
+     (list (intern (completing-read
+                    "Delete package: "
+                    (delq nil (mapcar 'identity my-packman-packages-list))
+                    nil t)))))
+  (when (or (symbolp pkg) (package-desc-p pkg))
+    (let ((name (if (package-desc-p pkg)
+                    (package-desc-name pkg)
+                  pkg)))
+      (package-delete (cadr (assoc name (package--alist))))
+      (setq my-packman-packages-list (delq name my-packman-packages-list)))))
 
 (defun my-packman-install-package (pkg)
   "Installs a package and saves it in the MY-PACKMAN-PACKAGES-LIST-FILE."
@@ -83,14 +98,13 @@ Returns t if the package exists, otherwise nil."
   "Like `package-list-packages', but shows only the packages that
   are installed and are not in `my-packages'.  Useful for
   cleaning out unwanted packages."
-       (interactive)
-       (require 'cl)
-       (package-show-package-list
-        (remove-if-not (lambda (x)
-                         (and (not (memq x my-packman-packages-list))
-                              (not (package-built-in-p x))
-                              (package-installed-p x)))
-                       (mapcar 'car package-archive-contents))))
+  (interactive)
+  (package-show-package-list
+   (remove-if-not (lambda (x)
+                    (and (not (memq x my-packman-packages-list))
+                         (not (package-built-in-p x))
+                         (package-installed-p x)))
+                  (mapcar 'car package-archive-contents))))
 
 (defun my-save-packman-list (filename)
   (save-excursion
