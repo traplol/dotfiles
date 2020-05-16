@@ -22,7 +22,7 @@
  '(inhibit-startup-screen t)
  '(org-babel-load-languages '((python . t) (C . t) (emacs-lisp . t)))
  '(package-selected-packages
-   '(helm-ag "helm" "helm" "helm" "fjasklfl" aggressive-indent gnu-elpa-keyring-update helm)))
+   '(rmsbolt aggressive-indent gnu-elpa-keyring-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

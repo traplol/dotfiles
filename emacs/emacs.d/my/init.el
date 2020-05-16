@@ -32,27 +32,16 @@
 
 ;;(require 'company)
 
-(let ((use-helm t))
-  (if use-helm
-      (progn
-        (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
-        (define-key helm-map (kbd "<tab>") #'helm-execute-persistent-action)
-        (define-key helm-map (kbd "C-z") #'helm-select-action)
-        (setq helm-mode-fuzzy-match t
-              helm-completion-in-region-fuzzy-match t
-              helm-candidate-number-limit 100)
-        (helm-mode 1)
-        (global-set-key (kbd "C-x C-f") 'helm-find-files))
-    (progn
-      ;; IDO
-      (require 'ido)
-      (setq ffap-machine-p-known 'reject
-            ffap-machine-p-unknown 'reject
-            ido-enable-flex-matching  t
-            ido-everywhere            t
-            ido-use-filename-at-point 'nil
-            ido-create-new-buffer     'always)
-      (ido-mode 1))))
+(progn
+  ;; IDO
+  (require 'ido)
+  (setq ffap-machine-p-known      'reject
+        ffap-machine-p-unknown    'reject
+        ido-enable-flex-matching  t
+        ido-everywhere            t
+        ido-use-filename-at-point 'nil
+        ido-create-new-buffer     'always)
+  (ido-mode 1))
 
 ;; Flymake Cursor
 (when nil
