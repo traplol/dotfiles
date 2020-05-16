@@ -486,8 +486,8 @@ COMMAND-STRING and ARGS is a format specifier to be applied with `format'"
 NAME is a symbol without any 'i3-' prefix.
 
 Defuns i3-cmd-NAME with the aglist of ARGLIST and body of BODY, this 
-function is expected to return a string or something that cleanly 
-converts to one with the '%s' format specifier.
+function is expected to return a string representing the *actual* i3 
+command.
 
 Defuns i3-NAME with the optional docstring in the CAR position of BODY 
 and forwards any arguments to i3-cmd-NAME then passing the result to 
@@ -519,6 +519,8 @@ and forwards any arguments to i3-cmd-NAME then passing the result to
                ,(if uses-rest
                     (cons 'apply (cons (list 'function cmd-sym) argsyms))
                   (cons cmd-sym argsyms)))))))
+
+
 
 
 (i3-defcmd focus (thing &optional type-hint)
@@ -807,33 +809,3 @@ locally binds it to the dynamic scope variable `*i3-thing*'."
        ,@body)))
 
 (provide 'i3-ipc)
-
-
-
-(when nil
-  (defun test-handler (proc type payload)
-    (let ((buffer (process-buffer proc)))
-      (when (and buffer (buffer-name buffer))
-        (with-current-buffer buffer
-          (goto-char (point-max))
-          (insert (format "pew (%s . %s)\n" type payload))
-          ))))
-
-  (i3-ipc-subscribe 'test-handler 'all)
-
-  (let ((my-id (i3-get-id (i3-focused-window)))
-        (target-id (i3-get-id (i3-find-window "koil -")))
-        (rnd (random (ash 1 31))))
-    )
-
-  (progn
-    (run-with-timer 1 nil #'i3-sync-wait)
-    (print (read-event nil nil 5)))
-
-  (i3-sync-wait)
-  (dotimes (i 10)
-    (i3-send-tick (format "%d" i)))
-
-
-
-  )
