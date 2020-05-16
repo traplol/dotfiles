@@ -24,6 +24,7 @@
          (xref-pop-marker-stack))))
     (lisp-mode (call-interactively 'slime-edit-definition))))
 
+
 (defun my--sexp-modes ()
   (local-set-key (kbd "TAB") (key-lambda (completion-at-point)))
   (local-set-key (kbd "C-M-i") 'hl-sexp-copy-highlighted)
@@ -34,20 +35,22 @@
   (paredit-mode 1)
   (show-paren-mode 1)
   (rainbow-delimiters-mode 1)
-  (highlight-sexp-mode 1)
-  )
+  (highlight-sexp-mode 1))
 
 (add-hook 'lisp-mode-hook 'my--sexp-modes)
 (add-hook 'emacs-lisp-mode-hook 'my--sexp-modes)
 (add-hook 'scheme-mode-hook 'my--sexp-modes)
 (add-hook 'racket-mode-hook 'my--sexp-modes)
 
+(defun my--elisp-local-keys ()
+  (local-set-key (kbd "C-c C-c") 'eval-defun))
 
+(add-hook 'emacs-lisp-mode-hook 'my--elisp-local-keys)
 
 (defun my--lisp-local-keys ()
   (local-set-key (kbd "<f1>") 'slime-hyperspec-lookup)
   (local-set-key (kbd "<f3>") 'slime-disassemble-symbol)
   (local-set-key (kbd "<f4>") 'slime-macroexpand-1)
-  (local-set-key (kbd "C-<f9>") 'slime-restart-inferior-lisp)
-  )
+  (local-set-key (kbd "C-<f9>") 'slime-restart-inferior-lisp))
+
 (add-hook 'lisp-mode-hook 'my--lisp-local-keys)
